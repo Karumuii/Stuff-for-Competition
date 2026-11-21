@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Java DSA Cheat Sheet</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        line-height: 1.6;
+        color: #1e293b;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+      h1,
+      h2 {
+        color: #2563eb;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 8px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 0.9rem;
+      }
+      th,
+      td {
+        padding: 10px;
+        border-bottom: 1px solid #e2e8f0;
+        text-align: left;
+      }
+      th {
+        background: #eff6ff;
+        color: #2563eb;
+      }
+      code {
+        font-family: monospace;
+        background: #f1f5f9;
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+      pre {
+        background: #f8fafc;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        font-family: monospace;
+        overflow-x: auto;
+      }
+      .note {
+        background: #fffbeb;
+        border-left: 4px solid #d97706;
+        padding: 12px;
+        margin: 16px 0;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>📊 DSA Quick Reference</h1>
+
+    <h2>Sorting Algorithms (Time Complexity)</h2>
+    <table>
+      <tr>
+        <th>Algorithm</th>
+        <th>Best Case</th>
+        <th>Average Case</th>
+        <th>Worst Case</th>
+        <th>Space</th>
+      </tr>
+      <tr>
+        <td><b>Bubble Sort</b></td>
+        <td>O(N)</td>
+        <td>O(N²)</td>
+        <td>O(N²)</td>
+        <td>O(1)</td>
+      </tr>
+      <tr>
+        <td><b>Insertion Sort</b></td>
+        <td>O(N)</td>
+        <td>O(N²)</td>
+        <td>O(N²)</td>
+        <td>O(1)</td>
+      </tr>
+      <tr>
+        <td><b>Selection Sort</b></td>
+        <td>O(N²)</td>
+        <td>O(N²)</td>
+        <td>O(N²)</td>
+        <td>O(1)</td>
+      </tr>
+      <tr>
+        <td><b>Merge Sort</b></td>
+        <td>O(N log N)</td>
+        <td>O(N log N)</td>
+        <td>O(N log N)</td>
+        <td>O(N)</td>
+      </tr>
+      <tr>
+        <td><b>Quick Sort</b></td>
+        <td>O(N log N)</td>
+        <td>O(N log N)</td>
+        <td>O(N²)</td>
+        <td>O(log N)</td>
+      </tr>
+    </table>
+
+    <div class="note">
+      <strong>Competition Tip:</strong>
+      Always use
+      <code>Arrays.sort(arr)</code>
+      for primitives or
+      <code>Collections.sort(list)</code>
+      for objects. Under the hood, Java uses TimSort (a hybrid of Merge Sort and
+      Insertion Sort) which is incredibly fast and stable.
+    </div>
+
+    <h2>Binary Search Tree (BST) Rules</h2>
+    <ul>
+      <li>
+        <b>Left Child</b>
+        must be
+        <b>less than</b>
+        the parent.
+      </li>
+      <li>
+        <b>Right Child</b>
+        must be
+        <b>greater than</b>
+        the parent.
+      </li>
+      <li>
+        <b>In-order Traversal</b>
+        (Left -> Root -> Right) always prints the tree in
+        <b>sorted order</b>
+        .
+      </li>
+    </ul>
+    <pre><code>void display(Node node) { // In-order Traversal
+    if (node == null) return;
+    display(node.left);
+    System.out.print(node.data + " ");
+    display(node.right);
+}</code></pre>
+
+    <h2>Linked List Basics</h2>
+    <p>
+      A Linked List is made of
+      <code>Node</code>
+      objects. Each node holds
+      <code>data</code>
+      and a
+      <code>next</code>
+      pointer.
+    </p>
+    <pre><code>class Node {
+    int data;
+    Node next;
+    Node(int data) { this.data = data; this.next = null; }
+}</code></pre>
+
+    <h3>Insert at Start (O(1))</h3>
+    <pre><code>Node newNode = new Node(data);
+newNode.next = head;
+head = newNode;</code></pre>
+
+    <h3>Delete a Node (O(N))</h3>
+    <p>
+      You must traverse from
+      <code>head</code>
+      to find the node before the one you want to delete, then change its
+      <code>.next</code>
+      pointer.
+    </p>
+  </body>
+</html>
