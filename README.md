@@ -2,41 +2,48 @@
 
 A collection of **Java practice programs and cheat sheets** for programming competition prep. Each folder covers one topic — basics, loops, input validation, and data structures — with small, well-commented programs you can read, run, and modify, plus cheat sheets (HTML + PDF) for quick revision.
 
+Also includes an **`OOP/`** folder with Java OOP activities (classes, encapsulation, inheritance, polymorphism, abstract classes) from [BSIT2B_Activties_Sentillas](https://github.com/Karumuii/BSIT2B_Activties_Sentillas) — see [`OOP/README.md`](OOP/README.md) for a topic guide.
+
 ---
 
 ## 📁 What's Inside
 
-Everything lives under the `TerminalProjects/` folder:
-
 ```
 Stuff for Competition/
-└── TerminalProjects/
-    ├── Student_Grade_Calculator.java   # Reads 3 marks, validates them, prints the average
-    ├── Odd_OR_Even.java                # Checks if a number is even or odd
-    ├── Basics/
-    │   ├── TypeCastingDemo.java        # Widening/narrowing casts, char ↔ int, String parsing
-    │   ├── MathFunctionsDemo.java      # Math.max, pow, sqrt, round, random numbers
-    │   └── java-conditionals.html      # Guide: if / else-if / switch statements
-    ├── Loops/
-    │   ├── PracticalLoopDemo.java      # Real-world loop: validated score input with quit option
-    │   ├── LoopControlDemo.java        # break, continue, return, and labeled loops
-    │   └── java-loop-control.html      # Guide: loop control keywords
-    ├── Validation/
-    │   ├── BeginnerValidation.java     # Simple beginner-style input checking
-    │   ├── InputValidation.java        # Reusable integer-in-range reader (rejects bad input)
-    │   ├── StringFieldValidation.java  # Rejects numbers where text is expected
-    │   └── java-input-validation-rules.html  # Guide: input validation rules
-    ├── DSA/
-    │   ├── SinglyLinkedList.java       # Singly linked list (insert at start, display)
-    │   ├── BinarySearchTree.java       # BST insert, search, traversals
-    │   ├── QuickSort.java              # Quick sort with Lomuto partition
-    │   ├── MergeSort.java              # Merge sort (divide and conquer)
-    │   └── DSA_CheatSheet.html         # Guide: DSA quick reference
-    └── PDFs/                           # All 4 cheat sheets as ready-to-print PDFs
-        ├── Java DSA Cheat Sheet.pdf
-        ├── Java Conditionals Cheat Sheet.pdf
-        ├── Java Input Validation — Rules to Remember.pdf
-        └── Java Loop Control — Cheat Sheet.pdf
+├── TerminalProjects/
+│   ├── Student_Grade_Calculator.java   # Reads 3 marks, validates them, prints the average
+│   ├── Odd_OR_Even.java                # Checks if a number is even or odd
+│   ├── Basics/
+│   │   ├── TypeCastingDemo.java        # Widening/narrowing casts, char ↔ int, String parsing
+│   │   ├── MathFunctionsDemo.java      # Math.max, pow, sqrt, round, random numbers
+│   │   └── java-conditionals.html      # Guide: if / else-if / switch statements
+│   ├── Loops/
+│   │   ├── PracticalLoopDemo.java      # Real-world loop: validated score input with quit option
+│   │   ├── LoopControlDemo.java        # break, continue, return, and labeled loops
+│   │   └── java-loop-control.html      # Guide: loop control keywords
+│   ├── Validation/
+│   │   ├── BeginnerValidation.java     # Simple beginner-style input checking
+│   │   ├── InputValidation.java        # Reusable integer-in-range reader (rejects bad input)
+│   │   ├── StringFieldValidation.java  # Rejects numbers where text is expected
+│   │   └── java-input-validation-rules.html  # Guide: input validation rules
+│   ├── DSA/
+│   │   ├── SinglyLinkedList.java       # Singly linked list (insert at start, display)
+│   │   ├── BinarySearchTree.java       # BST insert, search, traversals
+│   │   ├── QuickSort.java              # Quick sort with Lomuto partition
+│   │   ├── MergeSort.java              # Merge sort (divide and conquer)
+│   │   └── DSA_CheatSheet.html         # Guide: DSA quick reference
+│   └── PDFs/                           # All 4 cheat sheets as ready-to-print PDFs
+│       ├── Java DSA Cheat Sheet.pdf
+│       ├── Java Conditionals Cheat Sheet.pdf
+│       ├── Java Input Validation — Rules to Remember.pdf
+│       └── Java Loop Control — Cheat Sheet.pdf
+└── OOP/                               # OOP activities — one folder per topic
+    ├── ClassesAndObjects/              # starts here: classes, fields & methods
+    ├── Encapsulation/ … EncapsulationWithDiscounts/   # 4 encapsulation activities
+    ├── Inheritance/ … Inheritance2/    # inheritance, overriding, abstract classes
+    ├── Polymorphism/                   # Regular/Premium customer pricing
+    ├── PracticeFiles/                  # Extra practice programs
+    └── README.md                       # Ordered topic guide + original activity names
 ```
 
 - **`.java` files** → runnable demo programs with comments explaining each step.
