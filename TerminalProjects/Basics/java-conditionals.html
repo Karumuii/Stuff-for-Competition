@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Java Conditionals Cheat Sheet</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        line-height: 1.6;
+        color: #1e293b;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+      h1,
+      h2 {
+        color: #2563eb;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 8px;
+      }
+      pre {
+        background: #f8fafc;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        font-family: monospace;
+        overflow-x: auto;
+      }
+      code {
+        font-family: monospace;
+        background: #f1f5f9;
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+      .note {
+        background: #eff6ff;
+        border-left: 4px solid #2563eb;
+        padding: 12px;
+        margin: 16px 0;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🔀 Java Conditionals Cheat Sheet</h1>
+
+    <h2>1. If / Else If / Else</h2>
+    <pre><code>if (score >= 90) {
+    System.out.println("A");
+} else if (score >= 80) {
+    System.out.println("B");
+} else {
+    System.out.println("Needs Improvement");
+}</code></pre>
+
+    <h2>2. Switch Statement (Classic)</h2>
+    <pre><code>int day = 2;
+switch (day) {
+    case 1:
+        System.out.println("Monday");
+        break; // Don't forget break!
+    case 2:
+        System.out.println("Tuesday");
+        break;
+    default:
+        System.out.println("Other day");
+}</code></pre>
+
+    <div class="note">
+      <strong>Hint:</strong>
+      If you forget the
+      <code>break;</code>
+      statement, the code will "fall through" and execute the next case as well!
+    </div>
+
+    <h2>3. Switch Expression (Java 14+)</h2>
+    <pre><code>String result = switch (day) {
+    case 1, 7 -> "Weekend";
+    case 2, 3, 4, 5, 6 -> "Weekday";
+    default -> "Invalid";
+};
+// No breaks needed, and it returns a value!</code></pre>
+
+    <h2>4. Ternary Operator (Short-hand if/else)</h2>
+    <pre><code>// Syntax: condition ? value_if_true : value_if_false
+int age = 20;
+String status = (age >= 18) ? "Adult" : "Minor";
+System.out.println(status); // Adult</code></pre>
+  </body>
+</html>
