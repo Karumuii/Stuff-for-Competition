@@ -2,7 +2,7 @@
 
 A collection of **Java practice programs and cheat sheets** for programming competition prep. Each folder covers one topic — basics, loops, input validation, and data structures — with small, well-commented programs you can read, run, and modify, plus cheat sheets (HTML + PDF) for quick revision.
 
-Also includes an **`OOP/`** folder with Java OOP activities (classes, encapsulation, inheritance, polymorphism, abstract classes) from [BSIT2B_Activties_Sentillas](https://github.com/Karumuii/BSIT2B_Activties_Sentillas) — see [`OOP/README.md`](OOP/README.md) for a topic guide.
+Also includes an **`OOP/`** folder with Java OOP activities (classes, encapsulation, inheritance, polymorphism, abstract classes) from [BSIT2B_Activties_Sentillas](https://github.com/Karumuii/BSIT2B_Activties_Sentillas) — see [`OOP/README.md`](OOP/README.md) for a topic guide — plus **`OOP/Midterm_OOP/`** with my answered OOP midterm exam problems from [Karumuii/Midterm](https://github.com/Karumuii/Midterm), described in [`OOP/Midterm_OOP/README.md`](OOP/Midterm_OOP/README.md).
 
 ---
 
@@ -37,13 +37,20 @@ Stuff for Competition/
 │       ├── Java Conditionals Cheat Sheet.pdf
 │       ├── Java Input Validation — Rules to Remember.pdf
 │       └── Java Loop Control — Cheat Sheet.pdf
-└── OOP/                               # OOP activities — one folder per topic
-    ├── ClassesAndObjects/              # starts here: classes, fields & methods
-    ├── Encapsulation/ … EncapsulationWithDiscounts/   # 4 encapsulation activities
-    ├── Inheritance/ … Inheritance2/    # inheritance, overriding, abstract classes
-    ├── Polymorphism/                   # Regular/Premium customer pricing
-    ├── PracticeFiles/                  # Extra practice programs
-    └── README.md                       # Ordered topic guide + original activity names
+├── OOP/                                # OOP activities — one folder per topic
+│   ├── ClassesAndObjects/              # starts here: classes, fields & methods
+│   ├── Encapsulation/ … EncapsulationWithDiscounts/   # 4 encapsulation activities
+│   ├── Inheritance/ … Inheritance2/    # inheritance, overriding, abstract classes
+│   ├── Polymorphism/                   # Regular/Premium customer pricing
+│   ├── PracticeFiles/                  # Extra practice programs
+│   ├── Midterm_OOP/                    # Answered midterm exam problems
+│   │   ├── AbstractionCampusRequests/          # Problem 1 — abstract requesters
+│   │   ├── EncapsulationTuitionAccount/        # Problem 2 — safe tuition payments
+│   │   ├── EncapsulationWellnessAppointments/  # Problem 3 — switch-case services
+│   │   ├── AbstractionServiceRequests/         # Problem 5 — one reference, 3 services
+│   │   └── README.md                           # Problem guide + how to run
+│   └── README.md                       # Ordered topic guide + original activity names
+└── Reviewer/                           # 25-page printable competition reference (PDF + HTML)
 ```
 
 - **`.java` files** → runnable demo programs with comments explaining each step.

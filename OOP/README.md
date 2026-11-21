@@ -56,3 +56,9 @@ Compile every activity at once (PowerShell):
 ```powershell
 javac (Get-ChildItem -Recurse -Filter *.java | Resolve-Path -Relative)
 ```
+
+---
+
+## 📝 Also in here: `Midterm_OOP/`
+
+My answered **OOP midterm exam problems** (renamed by topic, Problems 1, 2, 3, 5) — see [`Midterm_OOP/README.md`](Midterm_OOP/README.md). Those programs run from **inside `Midterm_OOP/`**, not from this folder.

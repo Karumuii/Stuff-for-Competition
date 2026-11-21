@@ -1,0 +1,1355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Java Competition Team Reference</title>
+<style>
+  @page { size: 8.5in 11in; margin: 0; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, Arial, sans-serif; font-size: 9.2pt; color: #101418;
+         -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { position: relative; width: 8.5in; height: 11in; overflow: hidden; background: #fff;
+          page-break-after: always; padding: 0.40in 0.50in 0.30in 0.50in; }
+  .page:last-child { page-break-after: auto; }
+  .pagenum { position: absolute; top: 0.14in; right: 0.30in; font-family: Consolas, monospace;
+             font-size: 9pt; color: #333; font-weight: bold; }
+  h1 { font-size: 21pt; margin: 2px 0 4px; color: #1a4f8b; }
+  .subtitle { font-size: 10.5pt; color: #444; margin-bottom: 8px; }
+  h2 { font-size: 12pt; margin: 9px 0 3px; color: #1a4f8b; border-bottom: 2px solid #1a4f8b; padding-bottom: 1px; }
+  h3 { font-size: 9.8pt; margin: 6px 0 2px; color: #0f3a66; }
+  p { margin: 2px 0; }
+  pre { font-family: Consolas, 'Courier New', monospace; font-size: 8.3pt; line-height: 1.18;
+        background: #f4f6f8; border: 1px solid #d8dee6; border-left: 3px solid #1a4f8b;
+        padding: 3px 6px; margin: 3px 0; white-space: pre; overflow: hidden; }
+  code { font-family: Consolas, monospace; font-size: 8.6pt; background: #eef2f6; padding: 0 2px; }
+  table { border-collapse: collapse; font-size: 8.5pt; margin: 3px 0; width: 100%; }
+  th, td { border: 1px solid #c4cdd8; padding: 1.5px 5px; text-align: left; vertical-align: top; }
+  th { background: #e8eef6; color: #123; }
+  .hint { background: #fff8e1; border-left: 4px solid #d97706; padding: 3px 7px; margin: 4px 0; font-size: 8.7pt; }
+  .warn { background: #fdecea; border-left: 4px solid #c62828; padding: 3px 7px; margin: 4px 0; font-size: 8.7pt; }
+  .tip  { background: #e8f5e9; border-left: 4px solid #2e7d32; padding: 3px 7px; margin: 4px 0; font-size: 8.7pt; }
+  ul { margin: 2px 0 3px 16px; padding: 0; }
+  li { margin: 1px 0; }
+  .cols2 { column-count: 2; column-gap: 14px; }
+  .cols3 { column-count: 3; column-gap: 12px; }
+  .toc td { border: none; border-bottom: 1px dotted #bbb; padding: 1px 4px; }
+  .toc { font-size: 9pt; }
+  .small { font-size: 8.3pt; color: #444; }
+</style>
+</head>
+<body>
+
+<!-- ================= PAGE 1 : COVER / TOC / GOLDEN RULES ================= -->
+<section class="page">
+  <div class="pagenum">1</div>
+  <h1>Java Programming Competition — Team Reference</h1>
+  <div class="subtitle">25-page printed reference &bull; Letter size &bull; single-sided &bull; page numbers in upper-right &bull; complies with contest rules</div>
+
+  <h2>Table of Contents</h2>
+  <table class="toc">
+    <tr><td><b>1</b> Golden rules &amp; index</td><td><b>10</b> StringBuilder, char tricks, string algorithms</td><td><b>18</b> Searching: linear &amp; binary</td></tr>
+    <tr><td><b>2</b> Program skeleton, primitives, casting, Math</td><td><b>11</b> Methods &amp; recursion</td><td><b>19</b> Linked lists (singly &amp; doubly)</td></tr>
+    <tr><td><b>3</b> Operators &amp; expressions</td><td><b>12</b> ArrayList &amp; LinkedList</td><td><b>20</b> Circular lists, BST, traversals</td></tr>
+    <tr><td><b>4</b> Scanner, printf, fast input</td><td><b>13</b> HashMap, HashSet, TreeMap</td><td><b>21</b> OOP: classes, constructors, encapsulation</td></tr>
+    <tr><td><b>5</b> Conditionals &amp; switch</td><td><b>14</b> Stack, Queue, PriorityQueue</td><td><b>22</b> OOP: inheritance, abstract, interface</td></tr>
+    <tr><td><b>6</b> Loops &amp; loop control</td><td><b>15</b> Built-in sorting &amp; comparators</td><td><b>23</b> Input-validation toolkit</td></tr>
+    <tr><td><b>7</b> Arrays (1D) &amp; Arrays utilities</td><td><b>16</b> Bubble, selection, insertion sort</td><td><b>24</b> Competition traps &amp; strategy hints</td></tr>
+    <tr><td><b>8</b> 2D arrays &amp; grids</td><td><b>17</b> Merge sort &amp; quick sort</td><td><b>25</b> Ready-to-use templates &amp; mini algorithms</td></tr>
+    <tr><td><b>9</b> String methods reference</td><td></td><td></td></tr>
+  </table>
+
+  <h2>10 Golden Rules (memorize these)</h2>
+  <div class="warn"><b>1. nextInt() then nextLine() skips input.</b> After any <code>nextInt()/nextDouble()</code>, the Enter key stays in the buffer. Call <code>sc.nextLine();</code> once (throwaway) before reading text, or always read numbers via <code>Integer.parseInt(sc.nextLine())</code>.</div>
+  <div class="warn"><b>2. int overflows silently past ~2.1 billion.</b> Sums/products that can exceed 2&times;10<sup>9</sup> must use <code>long</code> (safe to ~9.2&times;10<sup>18</sup>). Cast first: <code>long big = (long)a * b;</code></div>
+  <div class="warn"><b>3. Never compare Strings with ==.</b> Use <code>a.equals(b)</code> or <code>a.equalsIgnoreCase(b)</code>. <code>==</code> compares memory addresses, not text.</div>
+  <div class="warn"><b>4. Integer division truncates.</b> <code>5/2 == 2</code>, not 2.5. For a decimal average: <code>(double) sum / n</code>. Also <code>5 % 2</code> is the remainder (1).</div>
+  <div class="hint"><b>5. Binary search needs sorted data.</b> Linear search works anywhere; binary search is only for sorted arrays.</div>
+  <div class="hint"><b>6. Array index out of bounds = runtime crash.</b> Valid indexes are <code>0 .. length-1</code>. Careful with <code>a[i+1]</code> and <code>a[i-1]</code>.</div>
+  <div class="hint"><b>7. Recursion needs a base case that is actually reached.</b> If the parameter never changes toward it, you get <code>StackOverflowError</code>.</div>
+  <div class="hint"><b>8. % by zero crashes.</b> Check the divisor before dividing or taking remainders.</div>
+  <div class="hint"><b>9. doubles compare with epsilon:</b> <code>Math.abs(a-b) &lt; 1e-9</code>, never with <code>==</code>.</div>
+  <div class="hint"><b>10. Print a LOT of lines?</b> Build one <code>StringBuilder</code> and <code>System.out.print(sb)</code> once at the end — much faster.</div>
+
+  <h2>How to use this reference under time pressure</h2>
+  <ul>
+    <li>Page 4 has copy-ready input patterns; page 25 has full solution skeletons — start from those.</li>
+    <li>Code marked <span class="small">[from our repos]</span> is our own tested style from the team GitHub (Karumuii/OOP, Karumuii/DSA-All-Topics-1st-Year, Stuff-for-Competition).</li>
+    <li>Red boxes = famous bug traps. Yellow = useful hint. Green = good habit.</li>
+  </ul>
+</section>
+
+<!-- ================= PAGE 2 : SKELETON / PRIMITIVES / MATH ================= -->
+<section class="page">
+  <div class="pagenum">2</div>
+  <h2>1. Program skeleton &amp; how to compile</h2>
+  <pre>public class Main {                       // file MUST be named Main.java
+    public static void main(String[] args) {
+        System.out.println("Hello");      // every Java program starts here
+    }
+}</pre>
+<pre>javac Main.java          &gt;&gt; produces Main.class
+java Main                &gt;&gt; runs it          (no .java, no .class here)</pre>
+
+  <h3>Primitive types (know the limits!)</h3>
+  <table>
+    <tr><th>Type</th><th>Size</th><th>Range / values</th><th>Default</th><th>Literal examples</th></tr>
+    <tr><td><code>byte</code></td><td>8-bit</td><td>-128 .. 127</td><td>0</td><td><code>(byte)7</code></td></tr>
+    <tr><td><code>short</code></td><td>16-bit</td><td>-32,768 .. 32,767</td><td>0</td><td><code>(short)300</code></td></tr>
+    <tr><td><code>int</code></td><td>32-bit</td><td><b>-2,147,483,648 .. 2,147,483,647 (&plusmn;2.1&times;10&#8313;)</b></td><td>0</td><td><code>42, 0x1F</code></td></tr>
+    <tr><td><code>long</code></td><td>64-bit</td><td><b>&plusmn;9.22&times;10&#185;&#8312;</b> — use for big sums/products</td><td>0L</td><td><code>9000000000L</code></td></tr>
+    <tr><td><code>float</code></td><td>32-bit</td><td>~7 digits precision</td><td>0.0f</td><td><code>3.14f</code></td></tr>
+    <tr><td><code>double</code></td><td>64-bit</td><td>~15 digits precision</td><td>0.0d</td><td><code>3.14, 1.5e3</code></td></tr>
+    <tr><td><code>char</code></td><td>16-bit</td><td>one Unicode character</td><td>'\u0000'</td><td><code>'A', '7', '\n'</code></td></tr>
+    <tr><td><code>boolean</code></td><td>—</td><td><code>true</code> / <code>false</code> only</td><td>false</td><td><code>true</code></td></tr>
+  </table>
+  <div class="hint"><b>Limits when you need them:</b> <code>Integer.MAX_VALUE</code>, <code>Integer.MIN_VALUE</code>, <code>Long.MAX_VALUE</code>, <code>Double.MAX_VALUE</code>. Use <code>Integer.MAX_VALUE</code> as "infinity" when finding a minimum.</div>
+
+  <h3>Casting — widening (auto) vs narrowing (manual)</h3>
+  <pre>int i = 100;
+double d = i;            // widening: automatic            100.0
+int back = (int) d;      // narrowing: manual cast, TRUNCATES decimals (3.99 -> 3)
+char c = 'A';
+int ascii = c;           // 65   — char to int gives the ASCII code
+char b = (char) 66;      // 'B'  — int to char
+String s = "123";
+int n    = Integer.parseInt(s.trim());     // String -> int   (throws NumberFormatException)
+double x = Double.parseDouble("3.5");      // String -> double
+long l   = Long.parseLong("9876543210");   // String -> long
+String t = String.valueOf(42);             // number -> String (also Integer.toString(42))</pre>
+  <div class="warn"><b>Parsing fails on bad text:</b> wrap in <code>try { ... } catch (NumberFormatException e) { ... }</code> — see page 23 for the full reusable pattern.</div>
+
+  <h3>Math class — the only formulas we actually use in contest</h3>
+  <pre>Math.max(a, b)   Math.min(a, b)    Math.abs(-15)      // -&gt; 15
+Math.pow(2, 10)  // 1024.0  (returns double!)       Math.sqrt(81)   // 9.0
+Math.round(4.5)  // 5  (half up)                    Math.floor(4.9) // 4.0
+Math.ceil(4.1)   // 5.0                             Math.random()   // 0.0 ..&lt; 1.0
+int dice = (int)(Math.random() * 6) + 1;           // random int 1..6
+int ceilDiv = (a + b - 1) / b;                     // integer ceiling of a/b</pre>
+  <div class="warn"><code>Math.pow</code> returns double — cast to int if needed, or prefer repeated multiplication for exact integer powers.</div>
+</section>
+
+<!-- ================= PAGE 3 : OPERATORS ================= -->
+<section class="page">
+  <div class="pagenum">3</div>
+  <h2>2. Operators &amp; expressions</h2>
+  <table>
+    <tr><th>Group</th><th>Operators</th><th>Notes</th></tr>
+    <tr><td>Arithmetic</td><td><code>+ - * / %</code></td><td><b>int/int truncates</b> (7/2==3). <code>%</code> = remainder, works on negatives: <code>-7%2 == -1</code></td></tr>
+    <tr><td>Compound</td><td><code>+= -= *= /= %=</code></td><td><code>s += x;</code> is <code>s = s + x;</code></td></tr>
+    <tr><td>Increment</td><td><code>++ --</code></td><td><code>i++</code> use then add; <code>++i</code> add then use</td></tr>
+    <tr><td>Compare</td><td><code>== != &lt; &gt; &lt;= &gt;=</code></td><td>result is boolean</td></tr>
+    <tr><td>Logical</td><td><code>&amp;&amp; || !</code></td><td>short-circuit: right side may not run</td></tr>
+    <tr><td>Bitwise</td><td><code>&amp; | ^ ~ &lt;&lt; &gt;&gt; &gt;&gt;&gt;</code></td><td>see tricks below</td></tr>
+    <tr><td>Ternary</td><td><code>cond ? a : b</code></td><td><code>String r = (n%2==0) ? "even" : "odd";</code></td></tr>
+  </table>
+
+  <h3>Precedence (high to low, short list)</h3>
+  <pre>!  ++  --   (unary)      -x
+*  /  %
++  -
+&lt;  &lt;=  &gt;  &gt;=
+==  !=
+&amp;&amp;
+||
+=  +=  ...               (lowest)</pre>
+  <div class="hint">When unsure, add parentheses. <code>(a &amp;&amp; b) || c</code> is not the same as <code>a &amp;&amp; (b || c)</code>.</div>
+
+  <h3>Bitwise tricks that win contests</h3>
+  <pre>if ((n &amp; 1) == 0)        // even check (faster than n % 2 == 0)
+n &gt;&gt; 1                   // same as n / 2     (halve)
+n &lt;&lt; 1                   // same as n * 2     (double)
+n &gt;&gt; k                   // n / 2^k
+a ^ b ^ b == a           // XOR trick: find the unique element when pairs cancel</pre>
+  <h3>Swap without a temp variable</h3>
+  <pre>a = a + b;  b = a - b;  a = a - b;      // arithmetic swap
+// XOR swap: a ^= b;  b ^= a;  a ^= b;</pre>
+  <div class="warn">XOR/arith swap fails if a and b are the same array slot (<code>a[i], a[j]</code> with i==j) — you zero it out. Guard with <code>if (i != j)</code>.</div>
+
+  <h3>Common expression patterns</h3>
+  <pre>int max3 = Math.max(a, Math.max(b, c));            // max of three
+boolean inRange = (x &gt;= lo &amp;&amp; x &lt;= hi);            // range check
+char digit = (char) ('0' + 7);                     // '7'  — int to digit char
+int d = c - '0';                                   // char '7' -&gt; int 7   (VERY common)
+boolean isUpper = (ch &gt;= 'A' &amp;&amp; ch &lt;= 'Z');
+char low = (char) (ch + 32);                       // 'A' -&gt; 'a' (or use Character.toLowerCase)</pre>
+</section>
+
+<!-- ================= PAGE 4 : INPUT / OUTPUT ================= -->
+<section class="page">
+  <div class="pagenum">4</div>
+  <h2>3. Reading input &amp; printing output</h2>
+  <h3>Scanner — the everyday tool</h3>
+  <pre>import java.util.Scanner;
+Scanner sc = new Scanner(System.in);</pre>
+  <table>
+    <tr><th>Method</th><th>Reads</th><th>Method</th><th>Reads</th></tr>
+    <tr><td><code>nextInt()</code></td><td>an int (skips whitespace)</td><td><code>nextLine()</code></td><td>a WHOLE line including spaces</td></tr>
+    <tr><td><code>nextDouble()</code></td><td>a double</td><td><code>next()</code></td><td>one word (up to space)</td></tr>
+    <tr><td><code>nextLong()</code></td><td>a long</td><td><code>hasNextInt()</code></td><td>true if another int is waiting (EOF loops!)</td></tr>
+    <tr><td><code>nextBoolean()</code></td><td>"true"/"false"</td><td><code>hasNextLine()</code></td><td>true if another line exists</td></tr>
+  </table>
+  <div class="warn"><b>Trap #1 (most common bug!):</b> <code>nextInt()</code> leaves the newline in the buffer, so the next <code>nextLine()</code> returns <code>""</code>.
+  <pre>int age = sc.nextInt();
+sc.nextLine();                    // &lt;-- flush the leftover newline (throwaway call)
+String name = sc.nextLine();      // now this really reads the name</pre></div>
+  <div class="tip"><b>Safe habit for mixed input:</b> read EVERYTHING as a line and parse:
+  <pre>int n = Integer.parseInt(sc.nextLine().trim());</pre></div>
+
+  <h3>Standard input patterns (memorize all three)</h3>
+  <pre>// A) T test cases                       // B) Read until end of file (EOF)
+int t = sc.nextInt();                    while (sc.hasNextInt()) {
+while (t-- &gt; 0) {                            int x = sc.nextInt();
+    int n = sc.nextInt();                    // ... process x
+    // ... solve n                       }
+}
+// C) One line with N numbers, then the N numbers on the NEXT line(s)
+int n = sc.nextInt();
+int[] a = new int[n];
+for (int i = 0; i &lt; n; i++) a[i] = sc.nextInt();
+// D) N numbers all on ONE line after N — split the line:
+sc.nextLine();                            // flush after nextInt()
+String[] parts = sc.nextLine().trim().split("\\s+");
+for (int i = 0; i &lt; n; i++) a[i] = Integer.parseInt(parts[i]);</pre>
+
+  <h3>printf / format specifiers</h3>
+  <table>
+    <tr><th>Spec</th><th>Meaning</th><th>Example</th><th>Output</th></tr>
+    <tr><td><code>%d</code></td><td>int / long</td><td><code>printf("%d", 42)</code></td><td>42</td></tr>
+    <tr><td><code>%s</code></td><td>String</td><td><code>printf("%s!", "Hi")</code></td><td>Hi!</td></tr>
+    <tr><td><code>%.2f</code></td><td>2 decimals (rounds)</td><td><code>printf("%.2f", 3.14159)</code></td><td>3.14</td></tr>
+    <tr><td><code>%5d</code></td><td>width 5, right-aligned</td><td><code>printf("[%5d]", 42)</code></td><td>[&nbsp;&nbsp;&nbsp;42]</td></tr>
+    <tr><td><code>%-5d</code></td><td>width 5, left-aligned</td><td><code>printf("[%-5d]", 42)</code></td><td>[42&nbsp;&nbsp;&nbsp;]</td></tr>
+    <tr><td><code>%05d</code></td><td>zero-padded</td><td><code>printf("%05d", 42)</code></td><td>00042</td></tr>
+    <tr><td><code>%%</code></td><td>a literal %</td><td><code>printf("100%%")</code></td><td>100%</td></tr>
+  </table>
+  <pre>System.out.printf("Name: %-10s Avg: %.2f%n", name, avg);   // %n = newline
+String s = String.format("%.2f", avg);                     // build a String instead of printing</pre>
+
+  <h3>Fast IO — use when input is huge (10&#8309;+ numbers)</h3>
+  <pre>import java.io.*;   import java.util.*;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine().trim());
+        StringTokenizer st = new StringTokenizer(br.readLine());   // splits on spaces
+        long sum = 0;
+        for (int i = 0; i &lt; n; i++) sum += Long.parseLong(st.nextToken());
+        System.out.println(sum);
+    }
+}</pre>
+</section>
+
+<!-- ================= PAGE 5 : CONDITIONALS ================= -->
+<section class="page">
+  <div class="pagenum">5</div>
+  <h2>4. Conditionals &amp; switch</h2>
+  <h3>if / else-if / else</h3>
+  <pre>if (score &gt;= 90) {
+    System.out.println("A");
+} else if (score &gt;= 80) {
+    System.out.println("B");
+} else {
+    System.out.println("Needs Improvement");
+}</pre>
+  <div class="hint">Order matters! Check the highest range first. <code>score &gt;= 80</code> is also true for a 95, so an incorrect order mislabels grades.</div>
+  <h3>Switch — classic and arrow forms</h3>
+  <pre>switch (day) {                        // works on int, char, String, enum
+    case 1:  System.out.println("Mon"); break;   // break! or it falls through
+    case 2:  System.out.println("Tue"); break;
+    default: System.out.println("Invalid");
+}
+
+switch (day) {                        // arrow form: no break needed (Java 14+)
+    case 1 -&gt; System.out.println("Mon");
+    case 2 -&gt; System.out.println("Tue");
+    default -&gt; System.out.println("Invalid");
+}
+
+switch (grade) {                      // multiple labels share one branch
+    case 'A': case 'B':
+        System.out.println("Pass"); break;
+    default:
+        System.out.println("Try again");
+}</pre>
+  <div class="warn">Classic switch without <code>break</code> falls through to the next case — a classic silent bug.</div>
+
+  <h3>Ternary &amp; boolean logic</h3>
+  <pre>String parity = (n % 2 == 0) ? "even" : "odd";
+int bigger = (a &gt; b) ? a : b;
+boolean ok = (x != 0) &amp;&amp; (y / x &gt; 2);    // short-circuit protects the division!
+
+// De Morgan: !(A &amp;&amp; B) == !A || !B      !(A || B) == !A &amp;&amp; !B
+// Ranges need BOTH sides:  if (0 &lt;= x &amp;&amp; x &lt;= 100)   // not: if (0 &lt;= x &lt;= 100) -&gt; ERROR</pre>
+
+  <h3>Worked micro-examples</h3>
+  <pre>// leap year
+boolean leap = (year % 4 == 0 &amp;&amp; year % 100 != 0) || (year % 400 == 0);
+
+// sign of a number
+String sign = (n &gt; 0) ? "positive" : (n &lt; 0) ? "negative" : "zero";
+
+// find the largest of 3 without arrays
+int max = a;
+if (b &gt; max) max = b;
+if (c &gt; max) max = c;</pre>
+  <div class="tip">Comparing doubles: <code>if (Math.abs(a - b) &lt; 1e-9)</code> — never <code>a == b</code>.</div>
+</section>
+
+<!-- ================= PAGE 6 : LOOPS ================= -->
+<section class="page">
+  <div class="pagenum">6</div>
+  <h2>5. Loops &amp; loop control</h2>
+  <h3>The four loop forms</h3>
+  <pre>for (int i = 0; i &lt; n; i++) { ... }        // counted loop (0..n-1)
+while (cond) { ... }                        // pre-test: may run 0 times
+do { ... } while (cond);                    // post-test: ALWAYS runs once (menus!)
+for (int x : arr) { ... }                   // enhanced for: read-only over array/list</pre>
+  <h3>break, continue, labels (from our LoopControlDemo)</h3>
+  <pre>for (int i = 1; i &lt;= 10; i++) {
+    if (i == 5) break;          // exit the loop entirely
+    if (i % 2 == 0) continue;   // skip this iteration, go to next
+    System.out.print(i + " ");  // prints: 1 3
+}
+outer:                          // LABELED break exits BOTH loops
+for (int i = 0; i &lt; 3; i++) {
+    for (int j = 0; j &lt; 3; j++) {
+        if (found) break outer;
+    }
+}</pre>
+  <h3>The loop pattern library (rewrite these every contest)</h3>
+  <pre>// Sum &amp; average                    // Max value and its index
+int sum = 0;                        int max = a[0], maxIdx = 0;
+for (int i = 0; i &lt; n; i++) {       for (int i = 1; i &lt; n; i++)
+    sum += a[i];                        if (a[i] &gt; max) { max = a[i]; maxIdx = i; }
+double avg = (double) sum / n;
+
+// Count matches                    // Search flag
+int count = 0;                      boolean found = false;
+for (int x : a)                     for (int x : a)
+    if (x == target) count++;           if (x == target) { found = true; break; }</pre>
+  <pre>// Multiplication table (nested)    // Sum digits of a number
+for (int r = 1; r &lt;= 3; r++) {      int sum = 0;
+    for (int c = 1; c &lt;= 3; c++)    while (n &gt; 0) { sum += n % 10; n /= 10; }
+        System.out.print(r*c + " ");
+    System.out.println();
+}</pre>
+  <div class="warn"><b>Infinite loop check-list:</b> does the loop variable move toward the exit condition? (<code>i++</code>, <code>n /= 10</code>...) Does a <code>while(true)</code> have a <code>break</code>/<code>return</code> in every path?</div>
+  <div class="hint"><b>do-while is perfect for menus</b> — show the menu at least once, loop until the user picks "Exit". See the menu template on page 23.</div>
+  <div class="warn">Our old bug (Recursion.java in the DSA repo): a recursive method that calls itself with the <b>same</b> value never reaches its base case — <code>recursive(i)</code> with <code>if (i == 5) return;</code> but never <code>i+1</code> = StackOverflowError. Always move the parameter toward the base case.</div>
+</section>
+
+<!-- ================= PAGE 7 : ARRAYS 1D ================= -->
+<section class="page">
+  <div class="pagenum">7</div>
+  <h2>6. Arrays (1D)</h2>
+  <pre>int[] a = new int[10];                    // all zeros, fixed size
+int[] b = {5, 3, 8, 1, 9};                // literal init
+int[] c = new int[]{1, 2, 3};             // explicit
+int n = b.length;                         // NOTE: no () — it is a field
+b[0] = 99;                                // index 0 .. length-1
+String[] names = new String[3];           // [null, null, null] before assignment!</pre>
+  <h3>Core patterns</h3>
+  <pre>// Read n into array (after n)        // Print all (3 ways)
+int n = sc.nextInt();                  for (int i = 0; i &lt; n; i++) System.out.print(a[i]+" ");
+int[] a = new int[n];                  for (int x : a) System.out.print(x+" ");
+for (int i = 0; i &lt; n; i++)            System.out.println(Arrays.toString(a));
+    a[i] = sc.nextInt();
+
+// Reverse IN PLACE (two pointers)    // Left-rotate by 1
+for (int i = 0, j = n-1; i &lt; j;       int first = a[0];
+        i++, j--) {                   for (int i = 0; i &lt; n-1; i++) a[i] = a[i+1];
+    int t = a[i]; a[i] = a[j];        a[n-1] = first;
+    a[j] = t;
+}
+
+// Copy                              // Second largest (track two values)
+int[] copy = Arrays.copyOf(a, n);     int big = Integer.MIN_VALUE, second = big;
+int[] part = Arrays.copyOfRange(a,1,4); for (int x : a) {
+                                          if (x &gt; big) { second = big; big = x; }
+// Count even numbers                      else if (x &gt; second) second = x;
+int evens = 0;                         }
+for (int x : a) if (x % 2 == 0) evens++;</pre>
+  <h3>Frequency array technique (O(n) counting — hugely useful)</h3>
+  <pre>int[] freq = new int[101];                // values known to be 0..100
+for (int x : a) freq[x]++;                // count occurrences
+for (int v = 0; v &lt;= 100; v++)            // print in sorted order WITHOUT sorting!
+    if (freq[v] &gt; 0) System.out.println(v + " appears " + freq[v] + " times");
+// mode = index with largest freq; duplicates = any freq[v] &gt; 1</pre>
+  <div class="tip">If values are lowercase letters: <code>int[] f = new int[26]; f[s.charAt(i) - 'a']++;</code></div>
+
+  <h3>java.util.Arrays utilities</h3>
+  <table>
+    <tr><th>Call</th><th>Does</th><th>Call</th><th>Does</th></tr>
+    <tr><td><code>Arrays.toString(a)</code></td><td>[1, 2, 3] for printing</td><td><code>Arrays.fill(a, 7)</code></td><td>every slot = 7</td></tr>
+    <tr><td><code>Arrays.sort(a)</code></td><td>sorts ascending in place</td><td><code>Arrays.copyOf(a, len)</code></td><td>new array copy</td></tr>
+    <tr><td><code>Arrays.copyOfRange(a,1,4)</code></td><td>indexes 1..3</td><td><code>Arrays.equals(a,b)</code></td><td>element-by-element ==</td></tr>
+    <tr><td><code>Arrays.binarySearch(a, x)</code></td><td>index of x (<b>array must be sorted!</b>), negative if absent</td><td><code>Arrays.deepToString(grid)</code></td><td>print 2D arrays</td></tr>
+  </table>
+  <div class="warn"><b>Array == compares references, not contents!</b> Use <code>Arrays.equals(a, b)</code>. Same rule as Strings.</div>
+  <div class="hint"><b>Array insertion/deletion (from our Deletion activity):</b> arrays can't resize — build a new one of size &plusmn;1 and copy, skipping (delete) or adding (insert) the target index:
+  <pre>int[] out = new int[a.length - 1];            // delete index k
+for (int i = 0, j = 0; i &lt; a.length; i++)
+    if (i != k) out[j++] = a[i];</pre></div>
+</section>
+
+<!-- ================= PAGE 8 : ARRAYS 2D ================= -->
+<section class="page">
+  <div class="pagenum">8</div>
+  <h2>7. 2D arrays &amp; grids</h2>
+  <pre>int[][] g  = new int[3][4];               // 3 rows, 4 cols (all 0)
+int[][] m  = { {1,2,3}, {4,5,6} };        // 2 rows x 3 cols
+int rows = m.length; int cols = m[0].length;
+System.out.println(m[1][2]);              // row 1, col 2 -&gt; 6
+System.out.println(Arrays.deepToString(m));   // [[1, 2, 3], [4, 5, 6]]</pre>
+  <h3>Traversal patterns (know which loops in which order)</h3>
+  <pre>// row-major (normal reading order)    // column-major (go DOWN each column first)
+for (int r = 0; r &lt; rows; r++)          for (int c = 0; c &lt; cols; c++) {
+    for (int c = 0; c &lt; cols; c++)          for (int r = 0; r &lt; rows; r++)
+        ... m[r][c] ...                         ... m[r][c] ...
+
+// Read a grid from input (R rows then C cols, row by row)
+int R = sc.nextInt(), C = sc.nextInt();
+int[][] g = new int[R][C];
+for (int r = 0; r &lt; R; r++)
+    for (int c = 0; c &lt; C; c++)
+        g[r][c] = sc.nextInt();
+
+// Row sums / column sums / main diagonal
+int[] rowSum = new int[R], colSum = new int[C];
+for (int r = 0; r &lt; R; r++)
+    for (int c = 0; c &lt; C; c++) {
+        rowSum[r] += g[r][c];
+        colSum[c] += g[r][c];
+    }
+int diag = 0;
+for (int i = 0; i &lt; R; i++) diag += g[i][i];          // main diagonal
+for (int i = 0; i &lt; R; i++) diag2 += g[i][R-1-i];     // anti-diagonal</pre>
+  <h3>Jagged arrays (rows of different lengths)</h3>
+  <pre>int[][] j = new int[3][];                 // fix rows only
+j[0] = new int[2];  j[1] = new int[5];  j[2] = new int[1];
+for (int r = 0; r &lt; j.length; r++)        // use j[r].length inside!
+    for (int c = 0; c &lt; j[r].length; c++) ...</pre>
+  <h3>Grid movement trick (up/down/left/right without 4 ifs)</h3>
+  <pre>int[] dr = {-1, 1, 0, 0};       // change in row
+int[] dc = { 0, 0,-1, 1};       // change in col
+for (int d = 0; d &lt; 4; d++) {
+    int nr = r + dr[d], nc = c + dc[d];
+    if (nr &gt;= 0 &amp;&amp; nr &lt; R &amp;&amp; nc &gt;= 0 &amp;&amp; nc &lt; C) {   // bounds check FIRST
+        // safe to use grid[nr][nc]
+    }
+}</pre>
+  <div class="warn">Index order confusions: <code>m[1][2]</code> is row 1, column 2. Swapping r/c in loops silently transposes your answer — double-check which loop is the row.</div>
+  <div class="tip">Printing a grid as rows: build each row with a loop + <code>println</code>, or <code>Arrays.deepToString(g)</code> for debugging.</div>
+</section>
+
+<!-- ================= PAGE 9 : STRING METHODS ================= -->
+<section class="page">
+  <div class="pagenum">9</div>
+  <h2>8. Strings — method reference</h2>
+  <pre>String s = "  Hello World  ";
+s.length()               // 15 (parentheses! unlike arrays)
+s.trim()                 // "Hello World"  (cuts outer spaces)
+s.charAt(0)              // 'H'   — single char, index 0-based
+s.substring(2)           // "llo World"   — from index 2 to end
+s.substring(2, 7)        // "llo W"       — start IN, end OUT
+s.indexOf('o')           // 4   (first match; -1 if absent)
+s.indexOf("World")       // 7   (works with substrings too)
+s.lastIndexOf('o')       // 13
+s.toUpperCase()          // "  HELLO WORLD  "
+s.toLowerCase()
+s.equals("Hello")        // false — CONTENT comparison (never use ==)
+s.equalsIgnoreCase("hello world")
+s.compareTo("abc")       // &lt;0, 0, &gt;0 — dictionary order ("a".compareTo("b") = -1)
+s.contains("World")      // true
+s.startsWith("  He")     // true      s.endsWith("d  ") // true
+s.replace('l', 'L')      // "  HeLLo WorLd  "  (ALL occurrences)
+s.replace("Hello", "Hi") // substring version
+s.toCharArray()          // char[] — loop over characters easily
+s.isEmpty() / s.isBlank()// "" / "   " are empty/blank
+String.join("-", "a","b","c")  // "a-b-c"
+"ab".repeat(3)           // "ababab" (Java 11+)
+"42".matches("\\d+")     // true — regex quick check (see page 23)</pre>
+  <div class="warn"><b>Strings are immutable</b> — every method RETURNS a new string: <code>s = s.trim().toUpperCase();</code> Calling <code>s.trim();</code> alone changes nothing!</div>
+  <div class="warn"><b>charAt returns a char, not a String:</b> <code>s.charAt(0) == 'H'</code> uses single quotes. Double quotes <code>"H"</code> will not compile with ==.</div>
+
+  <h3>Splitting &amp; joining input lines (contest bread-and-butter)</h3>
+  <pre>String line = sc.nextLine();
+String[] p = line.trim().split(" ");          // by space
+String[] q = line.split(",\\s*");             // by comma + optional space
+int[] nums = new int[p.length];
+for (int i = 0; i &lt; p.length; i++) nums[i] = Integer.parseInt(p[i]);
+// split by ANY whitespace: split("\\s+")   — the \\ is required in Java strings</pre>
+  <h3>Char &lt;-&gt; String conversions</h3>
+  <pre>char c = s.charAt(0);
+String one = Character.toString(c);     // or String.valueOf(c)
+char[] arr = s.toCharArray();
+String back = new String(arr);
+boolean digit = Character.isDigit(c);   // also isLetter, isUpperCase, isLowerCase
+char lower  = Character.toLowerCase(c); // also toUpperCase</pre>
+  <div class="hint">Comparing chars: <code>c == 'A'</code> is fine (chars are primitives). <code>+</code> on chars adds their codes — <code>'a'+1 == 'b'</code> when cast back to char.</div>
+</section>
+
+<!-- ================= PAGE 10 : STRINGBUILDER + STRING ALGOS ================= -->
+<section class="page">
+  <div class="pagenum">10</div>
+  <h2>9. StringBuilder &amp; classic string algorithms</h2>
+  <h3>StringBuilder (mutable — build strings in loops with this)</h3>
+  <pre>StringBuilder sb = new StringBuilder();
+sb.append("Hello");            sb.append(42);          // anything
+sb.insert(0, "&gt;&gt; ");           sb.reverse();
+sb.delete(0, 3);               sb.deleteCharAt(0);
+sb.setCharAt(0, 'X');          sb.length();
+String out = sb.toString();
+// FAST OUTPUT pattern: build everything, print once at the end
+StringBuilder out2 = new StringBuilder();
+for (int i = 1; i &lt;= 5; i++) out2.append(i).append("\n");
+System.out.print(out2);</pre>
+  <div class="tip">Never do <code>s += x;</code> inside a big loop — it rebuilds the whole string every time. Use StringBuilder.</div>
+
+  <h3>Palindrome (ignore case)</h3>
+  <pre>boolean isPal = true;
+String t = s.toLowerCase();
+for (int i = 0, j = t.length()-1; i &lt; j; i++, j--)
+    if (t.charAt(i) != t.charAt(j)) { isPal = false; break; }</pre>
+  <h3>Count vowels / reverse words / anagram by counting</h3>
+  <pre>int vowels = 0;
+for (char c : s.toLowerCase().toCharArray())
+    if ("aeiou".indexOf(c) &gt;= 0) vowels++;
+
+String reversed = new StringBuilder(s).reverse().toString();   // whole string
+String[] words = s.trim().split("\\s+");                       // reverse word ORDER
+StringBuilder rw = new StringBuilder();
+for (int i = words.length-1; i &gt;= 0; i--) rw.append(words[i]).append(" ");
+
+boolean anagram = true;                       // same letter counts?
+int[] f = new int[26];
+for (char c : a.toLowerCase().toCharArray()) f[c-'a']++;
+for (char c : b.toLowerCase().toCharArray()) f[c-'a']--;
+for (int v : f) if (v != 0) { anagram = false; break; }</pre>
+  <h3>Digit work on numbers-as-strings and ints</h3>
+  <pre>// Sum of digits (int version)       // Reverse an integer (and detect overflow range)
+int n = 4821, sum = 0;                long rev = 0;
+while (n &gt; 0) {                       while (n != 0) {
+    sum += n % 10;   // last digit        rev = rev * 10 + n % 10;
+    n /= 10;         // drop last         n /= 10;
+}                                     }
+// extract digit k (from the right, 0-based):  (n / (int)Math.pow(10,k)) % 10</pre>
+  <div class="hint">Reversing into a <code>long</code> protects against overflow when the reversed value exceeds int range.</div>
+</section>
+
+<!-- ================= PAGE 11 : METHODS & RECURSION ================= -->
+<section class="page">
+  <div class="pagenum">11</div>
+  <h2>10. Methods &amp; recursion</h2>
+  <h3>Method anatomy</h3>
+  <pre>static int square(int x) {          // static = callable without an object
+    return x * x;                   // return type first, params with types
+}
+int result = square(7);             // 49
+
+static void greet(String name) {    // void = returns nothing
+    System.out.println("Hi, " + name);
+}</pre>
+  <h3>Overloading — same name, different parameters</h3>
+  <pre>static int    max(int a, int b)        { return a &gt;= b ? a : b; }
+static double max(double a, double b)  { return a &gt;= b ? a : b; }
+static int    max(int a, int b, int c) { return max(max(a, b), c); }</pre>
+  <h3>Helpers worth writing from memory</h3>
+  <pre>static boolean isPrime(int n) {
+    if (n &lt; 2) return false;
+    for (int i = 2; (long) i * i &lt;= n; i++)
+        if (n % i == 0) return false;
+    return true;
+}
+static int sumDigits(int n) { int s = 0; while (n &gt; 0) { s += n % 10; n /= 10; } return s; }
+static int countDigits(int n) { if (n == 0) return 1; int c = 0; while (n != 0) { c++; n /= 10; } return c; }</pre>
+  <h3>Recursion — base case + progress</h3>
+  <pre>static long factorial(int n) {
+    if (n &lt;= 1) return 1;           // BASE CASE first!
+    return n * factorial(n - 1);    // PROGRESS: n shrinks every call
+}
+static int fib(int n) {                       // fib: 0 1 1 2 3 5 8 ...
+    if (n &lt;= 1) return n;
+    return fib(n-1) + fib(n-2);               // exponential! fine for n &lt;= ~25
+}
+static long power(int base, int exp) {        // fast O(log exp) version
+    if (exp == 0) return 1;
+    long half = power(base, exp / 2);
+    return (exp % 2 == 0) ? half * half : half * half * base;
+}
+static void printDigits(int n) {              // prints digits vertically
+    if (n &lt; 10) { System.out.println(n); return; }
+    printDigits(n / 10);
+    System.out.println(n % 10);
+}</pre>
+  <div class="warn"><b>Pass-by-value:</b> reassigning a parameter inside a method (<code>x = 5;</code>) never changes the caller's variable. BUT arrays/objects are shared — <code>a[0] = 5;</code> inside a method DOES change the caller's array.</div>
+  <div class="hint">Recursion depth: each call uses stack space. &gt;~10,000 deep = <code>StackOverflowError</code> — convert to a loop if n is huge.</div>
+</section>
+
+<!-- ================= PAGE 12 : ARRAYLIST & LINKEDLIST ================= -->
+<section class="page">
+  <div class="pagenum">12</div>
+  <h2>11. ArrayList &amp; LinkedList (resizable lists)</h2>
+  <pre>import java.util.ArrayList;
+ArrayList&lt;String&gt; names = new ArrayList&lt;&gt;();     // &lt;&gt; type in angle brackets
+ArrayList&lt;Integer&gt; nums = new ArrayList&lt;&gt;();     // WRAPPER classes, not int!</pre>
+  <table>
+    <tr><th>Method</th><th>What it does</th><th>Method</th><th>What it does</th></tr>
+    <tr><td><code>add(x)</code></td><td>append at end</td><td><code>size()</code></td><td>number of elements</td></tr>
+    <tr><td><code>add(i, x)</code></td><td>insert AT index i</td><td><code>contains(x)</code></td><td>true if present</td></tr>
+    <tr><td><code>get(i)</code></td><td>read index i</td><td><code>indexOf(x)</code></td><td>first index or -1</td></tr>
+    <tr><td><code>set(i, x)</code></td><td>REPLACE index i</td><td><code>isEmpty()</code></td><td>size == 0</td></tr>
+    <tr><td><code>remove(i)</code></td><td>delete by index</td><td><code>clear()</code></td><td>remove everything</td></tr>
+    <tr><td><code>remove(obj)</code></td><td>delete by value (first)</td><td><code>sort(cmp)</code></td><td>sort in place</td></tr>
+  </table>
+  <div class="warn"><b>Integer vs int in remove:</b> <code>list.remove(1)</code> deletes INDEX 1. To delete the VALUE 1: <code>list.remove(Integer.valueOf(1))</code>.</div>
+  <pre>nums.add(10); nums.add(20); nums.add(30);
+System.out.println(nums);                 // [10, 20, 30]  — prints directly!
+for (int i = 0; i &lt; nums.size(); i++) ... nums.get(i) ...    // indexed loop
+for (int x : nums) ...                                     // enhanced loop
+int[] arr = nums.stream().mapToInt(Integer::intValue).toArray();  // to int[]
+for (int x : new int[]{1,2,3}) nums.add(x);               // int[] -&gt; list: loop &amp; add
+Collections.sort(nums);                   // ascending
+Collections.reverse(nums);                // flip order
+Collections.max(nums); Collections.min(nums);             // extremes (non-empty!)</pre>
+  <div class="hint">Why wrappers? Collections store objects: <code>int</code>&rarr;<code>Integer</code>, <code>double</code>&rarr;<code>Double</code>, <code>char</code>&rarr;<code>Character</code>. Auto-boxing converts for you: <code>nums.add(5);</code> works.</div>
+
+  <h3>LinkedList — same methods, plus deque operations</h3>
+  <pre>import java.util.LinkedList;
+LinkedList&lt;String&gt; q = new LinkedList&lt;&gt;();
+q.addLast("A");   q.addFirst("Z");        // ends
+q.getFirst();     q.getLast();
+q.removeFirst();  q.removeLast();
+// Use LinkedList as a QUEUE (FIFO):      // as a STACK (LIFO): page 14 has ArrayDeque
+q.addLast(x);      // enqueue              push/pop via addFirst/removeFirst</pre>
+  <div class="tip">Rule of thumb: ArrayList unless you insert/remove at the FRONT constantly — then LinkedList/ArrayDeque.</div>
+</section>
+
+<!-- ================= PAGE 13 : MAPS & SETS ================= -->
+<section class="page">
+  <div class="pagenum">13</div>
+  <h2>12. HashMap, HashSet, TreeMap</h2>
+  <h3>HashMap&lt;K,V&gt; — key &rarr; value lookups</h3>
+  <pre>import java.util.HashMap;
+HashMap&lt;String, Integer&gt; stock = new HashMap&lt;&gt;();
+stock.put("Pen", 50);                  // insert or REPLACE
+stock.get("Pen");                      // 50   (null if missing!)
+stock.getOrDefault("Pen", 0);          // 0 instead of null when missing
+stock.containsKey("Pen");              // true
+stock.remove("Pen");                   // delete by key
+stock.size();   stock.clear();
+stock.putIfAbsent("Pen", 1);           // only insert if key absent
+stock.merge("Pen", 1, Integer::sum);   // stock["Pen"] += 1  (one-liner counter!)</pre>
+  <pre>// THE frequency-count pattern (words or chars)
+HashMap&lt;String, Integer&gt; freq = new HashMap&lt;&gt;();
+for (String w : words)
+    freq.put(w, freq.getOrDefault(w, 0) + 1);
+
+// Iterate a map
+for (String key : freq.keySet())            System.out.println(key + " -&gt; " + freq.get(key));
+for (var e : freq.entrySet())               System.out.println(e.getKey() + "=" + e.getValue());
+
+// Max-frequency entry
+String best = null; int maxC = 0;
+for (var e : freq.entrySet())
+    if (e.getValue() &gt; maxC) { maxC = e.getValue(); best = e.getKey(); }</pre>
+  <div class="warn">get() on a missing key returns <b>null</b> — unboxing null into int crashes. Prefer <code>getOrDefault(k, 0)</code>.</div>
+
+  <h3>HashSet&lt;T&gt; — unique items, O(1) membership</h3>
+  <pre>import java.util.HashSet;
+HashSet&lt;String&gt; seen = new HashSet&lt;&gt;();
+seen.add("A");                    // false if already present (ignores duplicates)
+seen.contains("A");               // true
+seen.size();
+// Deduplicate a list:            // Detect a duplicate:
+HashSet&lt;Integer&gt; uniq = new HashSet&lt;&gt;(nums);   for (int x : nums)
+ArrayList&lt;Integer&gt; noDupes = new ArrayList&lt;&gt;(uniq);    if (!seen.add(x)) { /* dup! */ }</pre>
+
+  <h3>TreeMap / TreeSet — always sorted by key</h3>
+  <pre>import java.util.TreeMap;
+TreeMap&lt;Integer, String&gt; tm = new TreeMap&lt;&gt;();    // keys kept in sorted order
+tm.firstKey();  tm.lastKey();                     // smallest / largest key
+// Iterate = ascending key order.  TreeSet&lt;T&gt; = sorted unique values, .first()/.last()</pre>
+  <div class="tip">Need keys in INSERTION order? Use <code>LinkedHashMap</code>. Need sorted? TreeMap.</div>
+</section>
+
+<!-- ================= PAGE 14 : STACK / QUEUE / PQ ================= -->
+<section class="page">
+  <div class="pagenum">14</div>
+  <h2>13. Stack, Queue, PriorityQueue (ArrayDeque)</h2>
+  <h3>Stack — LIFO (last in, first out)</h3>
+  <pre>import java.util.ArrayDeque;
+ArrayDeque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();
+stack.push(1);            // add on top
+stack.push(2);            // [2, 1]
+stack.peek();             // 2 — look, don't remove (null if empty!)
+stack.pop();              // 2 — remove and return top
+stack.isEmpty();
+// LIFO = undo, matching brackets, backtracking, "most recent first"</pre>
+  <h3>Queue — FIFO (first in, first out)</h3>
+  <pre>ArrayDeque&lt;Integer&gt; q = new ArrayDeque&lt;&gt;();
+q.offer(1);               // enqueue at tail     (add works too)
+q.offer(2);
+q.peek();                 // 1 — front of the line, no removal
+q.poll();                 // 1 — dequeue from head
+// FIFO = lines, BFS, processing in arrival order</pre>
+  <div class="tip">ArrayDeque beats the legacy <code>Stack</code> and <code>LinkedList</code> classes — one tool for both jobs. Nulls are not allowed in it.</div>
+
+  <h3>PriorityQueue — smallest out first (min-heap by default)</h3>
+  <pre>import java.util.PriorityQueue;
+PriorityQueue&lt;Integer&gt; pq = new PriorityQueue&lt;&gt;();
+pq.add(5); pq.add(1); pq.add(3);
+pq.peek();                // 1 — the SMALLEST
+pq.poll();                // 1 — removes smallest, re-heapifies
+// MAX-heap (largest first):
+PriorityQueue&lt;Integer&gt; maxPq = new PriorityQueue&lt;&gt;(Collections.reverseOrder());
+// "Top-K smallest": keep a max-heap of size K, replace top when smaller appears.</pre>
+
+  <h3>Classic: balanced parentheses (stack pattern)</h3>
+  <pre>static boolean balanced(String s) {
+    ArrayDeque&lt;Character&gt; st = new ArrayDeque&lt;&gt;();
+    for (char c : s.toCharArray()) {
+        if (c == '(' || c == '[' || c == '{') st.push(c);
+        else if (c == ')' || c == ']' || c == '}') {
+            if (st.isEmpty()) return false;
+            char o = st.pop();
+            if ((c == ')' &amp;&amp; o != '(') || (c == ']' &amp;&amp; o != '[')
+                || (c == '}' &amp;&amp; o != '{')) return false;
+        }
+    }
+    return st.isEmpty();          // leftovers = unbalanced
+}</pre>
+  <h3>Classic: BFS-style level processing with a queue</h3>
+  <pre>ArrayDeque&lt;Integer&gt; bfs = new ArrayDeque&lt;&gt;();
+bfs.add(start);
+while (!bfs.isEmpty()) {
+    int cur = bfs.poll();            // take next in line
+    // ... visit cur ...
+    bfs.add(neighbor);               // enqueue discovered items
+}</pre>
+</section>
+
+<!-- ================= PAGE 15 : BUILT-IN SORT / COMPARATORS ================= -->
+<section class="page">
+  <div class="pagenum">15</div>
+  <h2>14. Built-in sorting &amp; comparators</h2>
+  <pre>int[] a = {5, 2, 9, 1};
+Arrays.sort(a);                              // ascending, in place, O(n log n)
+String[] s = {"pear", "apple", "fig"};
+Arrays.sort(s);                              // dictionary order
+
+Integer[] boxed = {5, 2, 9};                 // descending needs objects
+Arrays.sort(boxed, Collections.reverseOrder());
+
+int[] d = {5, 2, 9};                         // descending for primitives: sort then flip
+Arrays.sort(d);
+for (int i = 0, j = d.length-1; i &lt; j; i++, j--) { int t=d[i]; d[i]=d[j]; d[j]=t; }
+
+ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;(List.of(5,2,9));
+Collections.sort(list);                      // lists sort via Collections
+Collections.sort(list, Collections.reverseOrder());</pre>
+  <h3>Comparators (sort by YOUR rule)</h3>
+  <pre>// Lambda: negative = x first, positive = y first, 0 = equal
+Arrays.sort(names, (x, y) -&gt; x.length() - y.length());     // by length ascending
+
+// Sort int[][] by column 0 (then column 1) — int[] rows are objects, this works:
+int[][] pts = {{3,4},{1,9},{1,2}};
+Arrays.sort(pts, (x, y) -&gt; x[0] != y[0] ? x[0]-y[0] : x[1]-y[1]);
+
+// Comparator.comparing + thenComparing (clean multi-key)
+Arrays.sort(people, Comparator.comparing((Person p) -&gt; p.name)
+                              .thenComparing(p -&gt; p.age)
+                              .thenComparing(p -&gt; -p.score));   // '-' flips one key
+
+// On lists:
+list.sort((x, y) -&gt; y - x);                    // descending integers</pre>
+  <div class="warn"><b>Subtraction trick overflow:</b> for values near int limits use <code>Integer.compare(x, y)</code> instead of <code>x - y</code>.</div>
+
+  <h3>Complexity table (from our DSA cheat sheet)</h3>
+  <table>
+    <tr><th>Algorithm</th><th>Best</th><th>Average</th><th>Worst</th><th>Space</th><th>Stable?</th></tr>
+    <tr><td>Bubble sort</td><td>O(n)</td><td>O(n&sup2;)</td><td>O(n&sup2;)</td><td>O(1)</td><td>yes</td></tr>
+    <tr><td>Insertion sort</td><td>O(n)</td><td>O(n&sup2;)</td><td>O(n&sup2;)</td><td>O(1)</td><td>yes</td></tr>
+    <tr><td>Selection sort</td><td>O(n&sup2;)</td><td>O(n&sup2;)</td><td>O(n&sup2;)</td><td>O(1)</td><td>no</td></tr>
+    <tr><td>Merge sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n)</td><td>yes</td></tr>
+    <tr><td>Quick sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n&sup2;)</td><td>O(log n)</td><td>no</td></tr>
+    <tr><td><code>Arrays.sort</code></td><td colspan="3">dual-pivot quicksort (prims) / mergesort (objects)</td><td>—</td><td>objects: yes</td></tr>
+  </table>
+  <div class="hint">Equal keys keep their order in a stable sort. Sorting by name then by grade with a stable sort keeps alphabetical order inside equal grades — sort by the SECOND key first if you sort twice.</div>
+</section>
+
+<!-- ================= PAGE 16 : CLASSIC SORTS ================= -->
+<section class="page">
+  <div class="pagenum">16</div>
+  <h2>15. Bubble, selection, insertion sort [from our repos]</h2>
+  <h3>Bubble sort — swap neighbors until no swaps (O(n&sup2;))</h3>
+  <pre>static void bubbleSort(int[] a) {
+    int n = a.length;
+    for (int i = 0; i &lt; n - 1; i++)              // passes
+        for (int j = 0; j &lt; n - 1 - i; j++)      // -i: sorted tail skipped
+            if (a[j] &gt; a[j+1]) {                 // '&gt;' asc — change to '&lt;' for desc
+                int t = a[j]; a[j] = a[j+1]; a[j+1] = t;
+            }
+}</pre>
+  <div class="hint">Speed-up: if a whole pass does zero swaps, the array is sorted — break early (best case O(n)).</div>
+  <h3>Selection sort — find the min of the rest, swap it into place</h3>
+  <pre>static void selectionSort(int[] a) {
+    for (int i = 0; i &lt; a.length - 1; i++) {
+        int min = i;
+        for (int j = i + 1; j &lt; a.length; j++)
+            if (a[j] &lt; a[min]) min = j;          // track smallest unsorted
+        int t = a[i]; a[i] = a[min]; a[min] = t; // one swap per pass
+    }
+}</pre>
+  <h3>Insertion sort — shift bigger values right, drop key in (great on nearly-sorted)</h3>
+  <pre>static void insertionSort(int[] a) {
+    for (int i = 1; i &lt; a.length; i++) {
+        int key = a[i];                          // card being inserted
+        int j = i - 1;
+        while (j &gt;= 0 &amp;&amp; a[j] &gt; key) {           // shift right while bigger
+            a[j+1] = a[j];
+            j--;
+        }
+        a[j+1] = key;                            // drop into the gap
+    }
+}</pre>
+  <h3>Demo harness (works for all three)</h3>
+  <pre>public static void main(String[] args) {
+    int[] a = {23, 4, 5, 12, 0, 256, 1};
+    bubbleSort(a);                               // or the others
+    System.out.println(Arrays.toString(a));      // [0, 1, 4, 5, 12, 23, 256]
+}</pre>
+  <table>
+    <tr><th>Sort</th><th>Use when</th><th>Remember</th></tr>
+    <tr><td>Bubble</td><td>tiny arrays / teaching</td><td>big values "bubble" to the end each pass</td></tr>
+    <tr><td>Selection</td><td>write-costly swaps</td><td>always n&sup2; compares, only n swaps</td></tr>
+    <tr><td>Insertion</td><td>nearly-sorted input</td><td>everything left of i is already sorted</td></tr>
+  </table>
+</section>
+
+<!-- ================= PAGE 17 : MERGE / QUICK ================= -->
+<section class="page">
+  <div class="pagenum">17</div>
+  <h2>16. Merge sort &amp; quick sort [from our repos]</h2>
+  <h3>Merge sort — split, sort halves, merge (stable O(n log n))</h3>
+  <pre>static void mergeSort(int[] a, int l, int r) {
+    if (l &lt; r) {
+        int m = (l + r) / 2;             // middle (watch overflow: l+(r-l)/2 for huge r)
+        mergeSort(a, l, m);              // sort left half
+        mergeSort(a, m + 1, r);          // sort right half
+        merge(a, l, m, r);               // combine
+    }
+}
+static void merge(int[] a, int l, int m, int r) {
+    int n1 = m - l + 1, n2 = r - m;
+    int[] L = new int[n1], R = new int[n2];
+    for (int i = 0; i &lt; n1; i++) L[i] = a[l + i];
+    for (int j = 0; j &lt; n2; j++) R[j] = a[m + 1 + j];
+    int i = 0, j = 0, k = l;
+    while (i &lt; n1 &amp;&amp; j &lt; n2)             // take smaller head each time
+        a[k++] = (L[i] &lt;= R[j]) ? L[i++] : R[j++];
+    while (i &lt; n1) a[k++] = L[i++];      // drain leftovers
+    while (j &lt; n2) a[k++] = R[j++];
+}</pre>
+  <h3>Quick sort — partition around a pivot, recurse on both sides</h3>
+  <pre>static void quickSort(int[] a, int lo, int hi) {
+    if (lo &lt; hi) {
+        int p = partition(a, lo, hi);
+        quickSort(a, lo, p - 1);
+        quickSort(a, p + 1, hi);
+    }
+}
+static int partition(int[] a, int lo, int hi) {
+    int pivot = a[hi];                   // last element as pivot
+    int i = lo - 1;                      // boundary of "&lt;= pivot" zone
+    for (int j = lo; j &lt; hi; j++)
+        if (a[j] &lt;= pivot) { i++; int t=a[i]; a[i]=a[j]; a[j]=t; }
+    int t = a[i+1]; a[i+1] = a[hi]; a[hi] = t;   // pivot into final slot
+    return i + 1;                        // pivot index
+}</pre>
+  <h3>Usage + recursion picture</h3>
+  <pre>int[] a = {12, 11, 13, 5, 6, 7};
+mergeSort(a, 0, a.length - 1);           // [5, 6, 7, 11, 12, 13]
+quickSort(a, 0, a.length - 1);
+// merge: depth log n, each level merges n items -&gt; n log n guaranteed
+// quick:  fastest in practice; worst case O(n^2) on already-sorted input with
+//         last-element pivot (hint: pick middle or random pivot to avoid)</pre>
+  <div class="tip">Contest reality: <code>Arrays.sort(a)</code> IS an optimized quicksort/mergesort — hand-write these only when the task asks you to implement sorting.</div>
+</section>
+
+<!-- ================= PAGE 18 : SEARCHING ================= -->
+<section class="page">
+  <div class="pagenum">18</div>
+  <h2>17. Searching: linear &amp; binary [from our repos]</h2>
+  <h3>Linear search — works on ANY array, O(n)</h3>
+  <pre>static int linearSearch(int[] nums, int target) {
+    for (int i = 0; i &lt; nums.length; i++)
+        if (nums[i] == target)
+            return i;                    // found: index
+    return -1;                           // convention: -1 = not found
+}</pre>
+  <h3>Binary search — SORTED arrays only, O(log n)</h3>
+  <pre>static int binarySearch(int[] num, int target) {
+    int start = 0, end = num.length - 1;
+    while (start &lt;= end) {
+        int mid = start + (end - start) / 2;    // avoids overflow (same as (s+e)/2)
+        if (num[mid] &gt; target)  end = mid - 1;  // too big: go LEFT
+        else if (num[mid] &lt; target) start = mid + 1;  // too small: go RIGHT
+        else return mid;                        // bullseye
+    }
+    return -1;
+}</pre>
+  <h3>Recursive binary search</h3>
+  <pre>static int bsearch(int[] a, int lo, int hi, int t) {
+    if (lo &gt; hi) return -1;                     // base case: empty range
+    int mid = (lo + hi) / 2;
+    if (a[mid] == t) return mid;
+    return (a[mid] &gt; t) ? bsearch(a, lo, mid-1, t)
+                        : bsearch(a, mid+1, hi, t);
+}</pre>
+  <table>
+    <tr><th>Tool</th><th>Call</th><th>Returns</th></tr>
+    <tr><td>built-in (array)</td><td><code>Arrays.binarySearch(sorted, key)</code></td><td>index, or <code>-(insertionPoint)-1</code> if absent</td></tr>
+    <tr><td>built-in (list)</td><td><code>Collections.binarySearch(sortedList, key)</code></td><td>same convention</td></tr>
+  </table>
+  <div class="warn">Binary search on unsorted data gives garbage answers silently. Sort first — or use linear search.</div>
+  <h3>The halving idea (why log n?)</h3>
+  <pre>1,000,000 items -&gt; ~20 checks      (2^20 &gt; 1,000,000)
+1,000 items    -&gt; ~10 checks
+Loop invariant: target is ALWAYS inside [start, end]. Every check halves the range.</pre>
+  <div class="hint">Common variant — FIRST occurrence with duplicates: when <code>a[mid]==t</code>, don't return yet: save the index and keep going left (<code>end = mid - 1</code>) to find the earliest.</div>
+</section>
+
+<!-- ================= PAGE 19 : LINKED LISTS ================= -->
+<section class="page">
+  <div class="pagenum">19</div>
+  <h2>18. Linked lists [from our repos]</h2>
+  <h3>Singly linked list — the Node pattern</h3>
+  <pre>class Node {
+    int data;
+    Node next;
+    Node(int data) { this.data = data; this.next = null; }
+}
+class SinglyList {
+    Node head;
+    void insertAtStart(int data) {          // O(1)
+        Node newNode = new Node(data);
+        newNode.next = head;
+        head = newNode;
+    }
+    void insertAtEnd(int data) {            // O(n) walk
+        Node newNode = new Node(data);
+        if (head == null) { head = newNode; return; }
+        Node cur = head;
+        while (cur.next != null) cur = cur.next;
+        cur.next = newNode;
+    }
+    void display() {
+        Node cur = head;
+        while (cur != null) {
+            System.out.print(cur.data + " -&gt; ");
+            cur = cur.next;
+        }
+        System.out.println("null");
+    }
+}</pre>
+  <h3>Delete by value &amp; search (singly)</h3>
+  <pre>void deleteByValue(int v) {
+    if (head == null) return;
+    if (head.data == v) { head = head.next; return; }   // head special case
+    Node cur = head;
+    while (cur.next != null &amp;&amp; cur.next.data != v) cur = cur.next;
+    if (cur.next != null) cur.next = cur.next.next;     // unlink
+}
+boolean contains(int v) {
+    for (Node c = head; c != null; c = c.next)
+        if (c.data == v) return true;
+    return false;
+}</pre>
+  <h3>Doubly linked list — prev + next</h3>
+  <pre>class DNode { int data; DNode prev, next; DNode(int d){ data = d; } }
+class DoublyList {
+    DNode head, tail;
+    void insertAtBeginning(int data) {
+        DNode n = new DNode(data);
+        if (head == null) { head = n; tail = n; }        // first node: both point here
+        else {
+            n.next = head; head.prev = n; head = n;      // link both directions!
+        }
+    }
+    void displayForward()  { for (DNode c = head; c != null; c = c.next) System.out.print(c.data+" "); }
+    void displayBackward() { for (DNode c = tail; c != null; c = c.prev) System.out.print(c.data+" "); }
+}</pre>
+  <div class="warn">Linked-list golden rules: (1) check <code>head == null</code> first, (2) keep a <code>prev</code> reference for deletions, (3) when inserting between nodes, set the NEW node's pointers BEFORE overwriting the old ones.</div>
+</section>
+
+<!-- ================= PAGE 20 : CIRCULAR / BST ================= -->
+<section class="page">
+  <div class="pagenum">20</div>
+  <h2>19. Circular lists &amp; binary search trees [from our repos]</h2>
+  <h3>Circular linked list — traverse with do-while (stop when back at head)</h3>
+  <pre>class CNode { int data; CNode next; CNode(int d){ data = d; } }
+CNode head, tail;
+void insert(int data) {                    // append at tail, tail.next = head
+    CNode n = new CNode(data);
+    if (head == null) { head = n; tail = n; n.next = head; }
+    else { tail.next = n; tail = n; tail.next = head; }
+}
+void traverse() {
+    if (head == null) return;
+    CNode cur = head;
+    do {                                   // do-while: process head, stop at head
+        System.out.print(cur.data + " ");
+        cur = cur.next;
+    } while (cur != head);
+    System.out.println();
+}</pre>
+  <div class="warn">A normal <code>while (cur != null)</code> NEVER ends on a circular list — the last node points back to head, not null.</div>
+
+  <h3>Binary Search Tree — insert + search + inorder print (sorted order!)</h3>
+  <pre>static class BST {
+    BST left, right;
+    int data;
+    BST(int data) { this.data = data; }
+}
+static BST insert(BST node, int value) {          // returns (possibly new) subtree root
+    if (node == null) return new BST(value);      // empty spot: place here
+    if (value &lt; node.data)      node.left  = insert(node.left,  value);
+    else if (value &gt; node.data) node.right = insert(node.right, value);
+    // equal values: ignore (or count duplicates)
+    return node;
+}
+static boolean search(BST node, int value) {      // O(log n) if tree is balanced
+    while (node != null) {
+        if (value == node.data) return true;
+        node = (value &lt; node.data) ? node.left : node.right;
+    }
+    return false;
+}
+static void inorder(BST node) {                   // LEFT, ROOT, RIGHT = sorted output
+    if (node == null) return;
+    inorder(node.left);
+    System.out.print(node.data + " ");
+    inorder(node.right);
+}</pre>
+  <pre>public static void main(String[] args) {
+    BST root = null;
+    int[] vals = {45, 15, 79, 90, 1, 10};
+    for (int v : vals) root = insert(root, v);
+    inorder(root);        // 1 10 15 45 79 90  — inorder of a BST is always sorted!
+}</pre>
+  <h3>All four traversals (same skeleton, different print position)</h3>
+  <pre>static void preorder(BST n)  { if (n==null) return; System.out.print(n.data+" "); preorder(n.left); preorder(n.right); }
+static void postorder(BST n) { if (n==null) return; preorder2(n.left); postorder(n.right); System.out.print(n.data+" "); }
+static void levelOrder(BST root) {                // BFS with a queue
+    if (root == null) return;
+    ArrayDeque&lt;BST&gt; q = new ArrayDeque&lt;&gt;();
+    q.add(root);
+    while (!q.isEmpty()) {
+        BST n = q.poll();
+        System.out.print(n.data + " ");
+        if (n.left  != null) q.add(n.left);
+        if (n.right != null) q.add(n.right);
+    }
+}</pre>
+  <table>
+    <tr><th>Traversal</th><th>Order</th><th>Remember as</th></tr>
+    <tr><td>Inorder</td><td>left, root, right</td><td>sorted for BST</td></tr>
+    <tr><td>Preorder</td><td>root, left, right</td><td>copy the tree</td></tr>
+    <tr><td>Postorder</td><td>left, right, root</td><td>delete the tree</td></tr>
+    <tr><td>Level order</td><td>depth by depth</td><td>queue, not recursion</td></tr>
+  </table>
+</section>
+
+<!-- ================= PAGE 21 : OOP PART 1 ================= -->
+<section class="page">
+  <div class="pagenum">21</div>
+  <h2>20. OOP I — classes, constructors, encapsulation [from our repos]</h2>
+  <h3>Class + objects template (our firstmeet1 style)</h3>
+  <pre>class Product {                       // fields = the data each object holds
+    String name;
+    double price;
+    int qty;
+
+    void display() {                  // method = what objects can DO
+        System.out.println("Name: " + name);
+        System.out.printf("Total: %.2f%n", price * qty);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Product p1 = new Product();   // new = build an object
+        p1.name = "Notebook";         // dot = reach inside the object
+        p1.price = 50;  p1.qty = 10;
+        p1.display();
+        Product p2 = new Product();   // each object has its OWN fields
+    }
+}</pre>
+  <h3>Constructors — set fields at birth (+ overloading)</h3>
+  <pre>class SalaryCalculator {
+    String name;  double rate;  double hours;
+    SalaryCalculator(String name, double rate, double hours) {   // same name as class
+        this.name = name;             // this. = the object's field, not the parameter
+        this.rate = rate;
+        this.hours = hours;
+    }
+    SalaryCalculator(String name) { this(name, 100, 8); }        // chained default
+    double gross() { return rate * hours; }
+}
+SalaryCalculator s = new SalaryCalculator("Rem", 500, 4);   // must match a constructor</pre>
+  <div class="hint">If you write NO constructor, Java gives a free no-argument one. The moment you write ANY constructor, the free one disappears (add it back yourself if needed).</div>
+
+  <h3>Encapsulation — private fields, public getters/setters with validation</h3>
+  <pre>class BankAccount {
+    private String owner;               // private: no direct access outside
+    private double balance;
+
+    public String getOwner() { return owner; }                  // getter
+    public void setOwner(String owner) { this.owner = owner; }  // setter
+
+    public void deposit(double amt) {
+        if (amt &lt;= 0) { System.out.println("Invalid amount"); return; }
+        this.balance += amt;
+    }
+    public double getBalance() { return balance; }   // read but no direct write
+}</pre>
+  <pre>// Validating setter (our PIS activity): never let price DROP below current
+public void updatePrice(double newPrice) {
+    if (newPrice &lt; price) System.out.println("Invalid Updated Price");
+    else price = newPrice;
+}</pre>
+  <div class="tip">Why encapsulate? Invalid states become impossible — validation lives in ONE place (the setter), not scattered across the whole program. Getters/setters pattern: <code>getX()</code> returns, <code>setX(v)</code> guards &amp; assigns.</div>
+  <div class="hint">static vs instance: <code>static int count;</code> is shared by ALL objects (one copy per class); instance fields are copied per object. Static methods can't touch instance fields directly.</div>
+</section>
+
+<!-- ================= PAGE 22 : OOP PART 2 ================= -->
+<section class="page">
+  <div class="pagenum">22</div>
+  <h2>21. OOP II — inheritance, abstract, interface, polymorphism [from our repos]</h2>
+  <h3>extends + super + @Override (our WaterOrder/DeliveryOrder)</h3>
+  <pre>class WaterOrder {                                   // PARENT
+    private String customer;
+    private int gallons;
+    WaterOrder(String customer, int gallons) { this.customer = customer; this.gallons = gallons; }
+    double calculatePrice() { return gallons * 30.0; }
+    void displayInfo() { System.out.println("Customer: " + customer); }
+}
+
+class DeliveryOrder extends WaterOrder {             // CHILD gets everything
+    private double distance, feePerKm;
+    DeliveryOrder(String c, int g, double dist, double fee) {
+        super(c, g);                                 // MUST be first line: build parent
+        this.distance = dist;  this.feePerKm = fee;
+    }
+    @Override                                        // optional but catches typos!
+    double calculatePrice() { return super.calculatePrice() + distance * feePerKm; }
+}
+WaterOrder w = new DeliveryOrder("Josh", 2, 5, 8);   // UPCAST: parent ref, child object
+System.out.println(w.calculatePrice());              // runs the CHILD version (polymorphism!)</pre>
+
+  <h3>Abstract classes — the Bank/BDO/Gcash pattern</h3>
+  <pre>abstract class Bank {                        // cannot be instantiated directly
+    String name;  int balance;
+    Bank(String name, int balance) { this.name = name; this.balance = balance; }
+    abstract void modeOfPayment();           // no body: children MUST implement
+    void info() { System.out.println(name + " " + balance); }   // shared method OK
+}
+class BDO extends Bank {
+    BDO(String n, int b) { super(n, b); }
+    @Override void modeOfPayment() { System.out.println("Paid through BDO"); }
+}
+class Gcash extends Bank {
+    Gcash(String n, int b) { super(n, b); }
+    @Override void modeOfPayment() { System.out.println("Paid through Gcash"); }
+}
+Bank p = new Gcash("Neighbor", 420);         // upcast
+p.modeOfPayment();                           // Gcash's version runs</pre>
+
+  <h3>Interfaces — pure contracts, multiple inheritance of type</h3>
+  <pre>interface Drawable { void draw(); }          // methods are public+abstract by default
+interface Resizable { void resize(double f); }
+class Square implements Drawable, Resizable {     // a class can implement MANY
+    public void draw() { System.out.println("[]"); }
+    public void resize(double f) { System.out.println("x" + f); }
+}
+// interface constants are public static final:  int MAX = 10;</pre>
+  <table>
+    <tr><th></th><th>abstract class</th><th>interface</th></tr>
+    <tr><td>methods</td><td>mix of abstract + concrete</td><td>abstract (default/static allowed)</td></tr>
+    <tr><td>fields</td><td>any</td><td>public static final only</td></tr>
+    <tr><td>inherit</td><td><code>extends</code> ONE class</td><td><code>implements</code> MANY</td></tr>
+    <tr><td>constructor</td><td>yes (for super calls)</td><td>no</td></tr>
+  </table>
+  <div class="hint">Our Customer/Regular/Premium activity = polymorphism in action: one <code>Customer</code> reference, different <code>computeFinalPayment()</code> per subclass. One call site, many behaviors.</div>
+  <div class="hint"><code>instanceof</code> checks the real type: <code>if (w instanceof DeliveryOrder d) { ... d.calculateDeliveryFee(); }</code> (pattern matching, Java 16+).</div>
+</section>
+
+<!-- ================= PAGE 23 : VALIDATION TOOLKIT ================= -->
+<section class="page">
+  <div class="pagenum">23</div>
+  <h2>22. Input-validation toolkit [from our repos]</h2>
+  <h3>Reusable integer-in-range reader (copy this whole method)</h3>
+  <pre>static Scanner sc = new Scanner(System.in);
+
+static int readIntInRange(String prompt, int min, int max) {
+    while (true) {
+        System.out.print(prompt);
+        String input = sc.nextLine().trim();        // read as TEXT first
+        if (input.isEmpty()) { System.out.println("  [X] Empty input."); continue; }
+        try {
+            int value = Integer.parseInt(input);    // rejects "abc", "8.5"
+            if (value &gt;= min &amp;&amp; value &lt;= max) return value;
+            System.out.println("  [X] Must be between " + min + " and " + max + ".");
+        } catch (NumberFormatException e) {
+            System.out.println("  [X] Not a whole number.");
+        }
+    }
+}
+// usage:  int score = readIntInRange("Enter score (0-100): ", 0, 100);</pre>
+  <h3>Text that must not be a pure number (our StringFieldValidation)</h3>
+  <pre>static String readNonNumericString(String prompt) {
+    while (true) {
+        System.out.print(prompt);
+        String input = sc.nextLine().trim();
+        if (input.isEmpty()) { System.out.println("  [X] Empty."); continue; }
+        if (input.matches("\\d+(\\.\\d+)?"))        // "123", "45.6" rejected
+            { System.out.println("  [X] That's a number. Enter text."); continue; }
+        return input;                               // "John123" is OK (has letters)
+    }
+}</pre>
+  <h3>Menu loop (do-while pattern)</h3>
+  <pre>int choice;
+do {
+    System.out.println("\n1. Add   2. View   3. Exit");
+    choice = readIntInRange("Choice: ", 1, 3);
+    switch (choice) {
+        case 1 -&gt; addItem();
+        case 2 -&gt; viewItems();
+    }
+} while (choice != 3);</pre>
+  <h3>Regex quick table (for <code>s.matches(...)</code> / <code>split(...)</code>)</h3>
+  <table>
+    <tr><th>Pattern</th><th>Matches</th><th>Pattern</th><th>Matches</th></tr>
+    <tr><td><code>"\\d+"</code></td><td>one or more digits</td><td><code>"\\d{4}"</code></td><td>exactly 4 digits</td></tr>
+    <tr><td><code>"[A-Za-z]+"</code></td><td>letters only</td><td><code>"\\d+(\\.\\d+)?"</code></td><td>int or decimal</td></tr>
+    <tr><td><code>"\\s+"</code></td><td>whitespace (split on any run)</td><td><code>"."</code> in split</td><td>regex ANY-char — escape as <code>"\\."</code>!</td></tr>
+  </table>
+  <h3>Validation decision flow (what to check, in order)</h3>
+  <pre>1. empty?                input.isEmpty()
+2. numeric?              try Integer.parseInt / Double.parseDouble
+3. in range?             value &gt;= min &amp;&amp; value &lt;= max
+4. other format rules?   length, matches(regex), contains("@"), etc.
+5. re-prompt with a clear message that says WHY it failed
+// Loop until valid — never continue with bad data.</pre>
+  <div class="tip">Double parse with locale: <code>Double.parseDouble</code> wants a DOT decimal. If input may use commas, <code>replace(',', '.')</code> first.</div>
+</section>
+
+<!-- ================= PAGE 24 : TRAPS & STRATEGY ================= -->
+<section class="page">
+  <div class="pagenum">24</div>
+  <h2>23. Competition traps, debugging &amp; strategy</h2>
+  <h3>The trap table (each of these has cost us points)</h3>
+  <table>
+    <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+    <tr><td>name input skipped</td><td>nextInt() leaves newline</td><td>throwaway <code>sc.nextLine()</code> after nextInt</td></tr>
+    <tr><td>answer off by rounding</td><td>integer division</td><td><code>(double) sum / n</code></td></tr>
+    <tr><td>wrong String compare</td><td><code>==</code> on Strings</td><td><code>a.equals(b)</code></td></tr>
+    <tr><td>negative huge number</td><td>int overflow</td><td><code>long</code> + <code>(long) a * b</code> before multiplying</td></tr>
+    <tr><td>crash at runtime</td><td>index == length</td><td>loops to <code>i &lt; length-1</code> when using <code>a[i+1]</code></td></tr>
+    <tr><td>"0" printed for avg</td><td>sum declared as int, division first</td><td>cast before dividing</td></tr>
+    <tr><td>StackOverflowError</td><td>recursion never progresses</td><td>move parameter toward base case</td></tr>
+    <tr><td>hangs forever</td><td>loop var never changes / no break</td><td>trace one iteration by hand</td></tr>
+    <tr><td>doubles "equal" but false</td><td>floating point error</td><td><code>Math.abs(a-b) &lt; 1e-9</code></td></tr>
+    <tr><td>null crash (.length on null)</td><td>object never created</td><td>check <code>== null</code> before using</td></tr>
+  </table>
+
+  <h3>Pick your algorithm by input size (n)</h3>
+  <table>
+    <tr><th>Max n</th><th>Safest complexity</th><th>Typical tools</th></tr>
+    <tr><td>&le; 10</td><td>O(n!)</td><td>try all permutations (recursion)</td></tr>
+    <tr><td>&le; 25</td><td>O(2&#8319;)</td><td>generate all subsets</td></tr>
+    <tr><td>&le; 500</td><td>O(n&sup3;)</td><td>triple nested loops</td></tr>
+    <tr><td>&le; 5,000</td><td>O(n&sup2;)</td><td>double loops, bubble-style scans</td></tr>
+    <tr><td>&le; 100,000</td><td>O(n log n)</td><td>sort, binary search, heap</td></tr>
+    <tr><td>&le; 10,000,000</td><td>O(n)</td><td>one pass, frequency arrays</td></tr>
+  </table>
+
+  <h3>Contest strategy checklist</h3>
+  <ul>
+    <li><b>Read ALL the input format first</b> — how many lines? separated by spaces or newlines? ends at EOF?</li>
+    <li><b>Solve the sample by hand</b> before coding — recompute the sample output with your logic.</li>
+    <li><b>Edge cases to test always:</b> 0, 1, negative, max value, empty line, single element, all-equal values.</li>
+    <li><b>Stuck 10 minutes?</b> Rewrite the problem in your own words; check bounds; try n=1 by hand.</li>
+    <li><b>Submitting partial:</b> a correct brute force beats a broken clever idea. O(n&sup2;) on n=1,000 is fine.</li>
+    <li><b>Output EXACTLY as asked</b> — capitalization, spaces, trailing newline. "Case #1:" matters.</li>
+    <li><b>Many lines of output?</b> StringBuilder + single print (page 10).</li>
+    <li>Compile mentally: every <code>{</code> closed, every variable declared, semicolons, correct method names.</li>
+  </ul>
+  <div class="tip">Time-boxing: 40% reading + planning, 40% coding, 20% testing. Don't code before you can predict the sample output.</div>
+</section>
+
+<!-- ================= PAGE 25 : TEMPLATES & MINI ALGOS ================= -->
+<section class="page">
+  <div class="pagenum">25</div>
+  <h2>24. Ready-to-use templates &amp; mini algorithms</h2>
+  <h3>Template A — T test cases, Scanner</h3>
+  <pre>import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        StringBuilder out = new StringBuilder();
+        while (t-- &gt; 0) {
+            int n = sc.nextInt();
+            long sum = 0;
+            for (int i = 0; i &lt; n; i++) sum += sc.nextInt();
+            out.append(sum).append("\n");           // one line of answer per case
+        }
+        System.out.print(out);
+    }
+}</pre>
+  <h3>Template B — read until EOF</h3>
+  <pre>Scanner sc = new Scanner(System.in);
+while (sc.hasNextInt()) {
+    int a = sc.nextInt(), b = sc.nextInt();
+    System.out.println(a + b);
+}</pre>
+  <h3>Number mini-algorithms (no formulas to memorize — just code)</h3>
+  <pre>static boolean isPrime(int n) {                 // sieve of Eratosthenes (many queries)
+    if (n &lt; 2) return false;                    static boolean[] sieve(int n) {
+    for (int i = 2; (long) i * i &lt;= n; i++)         boolean[] p = new boolean[n+1];
+        if (n % i == 0) return false;               Arrays.fill(p, true);  p[0]=p[1]=false;
+    return true;                                    for (int i = 2; (long) i*i &lt;= n; i++)
+}                                                       if (p[i])
+                                                            for (int j = i*i; j &lt;= n; j += i)
+static long gcd(long a, long b)                                 p[j] = false;
+    { return (b == 0) ? a : gcd(b, a % b); }        return p;
+static long lcm(long a, long b)             }
+    { return a / gcd(a, b) * b; }               // divide FIRST to avoid overflow
+
+static int reverseNumber(int n) {               static String toBinary(int n) {
+    int rev = 0;                                    if (n == 0) return "0";
+    while (n != 0) {                                StringBuilder b = new StringBuilder();
+        rev = rev * 10 + n % 10;                    while (n &gt; 0) { b.append(n % 2); n /= 2; }
+        n /= 10;                                    return b.reverse().toString();
+    }                                           }   // or Integer.toBinaryString(n)
+    return rev;
+}                                               static int fromBinary(String s)
+                                                    { return Integer.parseInt(s, 2); }</pre>
+  <h3>Final pre-submit checklist</h3>
+  <pre>[] compiled with no warnings?          [] tested: sample, n=0, n=1, negatives, max?
+[] long where sums/products grow?      [] output format char-for-char identical?
+[] nextLine trap handled?              [] file/class name = required name (Main)?
+[] no == on Strings?                   [] brackets &amp; semicolons balanced?</pre>
+  <div class="tip">When time is short, protect the basics: read input correctly, produce the exact output format, and never crash. A safe partial answer scores; a crashing clever one scores zero.</div>
+  <div class="small" style="margin-top:6px">Sources: team GitHub repos (Karumuii/OOP, Karumuii/DSA-All-Topics-1st-Year, Karumuii/Stuff-for-Competition) + team-authored examples. End of reference — page 25 of 25.</div>
+</section>
+
+</body>
+</html>
+</body>
+</html>
+</body>
+</html>
+</body>
+</html>
