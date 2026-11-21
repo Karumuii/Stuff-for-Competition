@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Java Loop Control — Cheat Sheet</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap");
+
+      :root {
+        --ink: #0f172a;
+        --muted: #64748b;
+        --accent: #2563eb;
+        --accent-soft: #eff6ff;
+        --border: #e2e8f0;
+        --code-bg: #f8fafc;
+        --good: #16a34a;
+        --good-soft: #f0fdf4;
+        --bad: #dc2626;
+        --bad-soft: #fef2f2;
+        --warn: #d97706;
+        --warn-soft: #fffbeb;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+        background: #cbd5e1;
+        color: var(--ink);
+        margin: 0;
+        padding: 32px 16px;
+        line-height: 1.6;
+        font-size: 14px;
+      }
+
+      .page {
+        max-width: 900px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 56px 60px 64px;
+        border-radius: 14px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+      }
+
+      /* ---------- HERO ---------- */
+      .hero {
+        text-align: center;
+        padding-bottom: 28px;
+        border-bottom: 3px solid var(--accent);
+        margin-bottom: 36px;
+      }
+      .hero h1 {
+        font-size: 2.3rem;
+        margin: 0 0 6px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .hero .sub {
+        color: var(--muted);
+        font-size: 1rem;
+        margin: 0 0 16px;
+      }
+      .badges span {
+        display: inline-block;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 999px;
+        margin: 0 4px;
+      }
+
+      /* ---------- HEADINGS ---------- */
+      h2 {
+        font-size: 1.22rem;
+        margin: 40px 0 14px;
+        padding-left: 12px;
+        border-left: 4px solid var(--accent);
+        font-weight: 800;
+        page-break-after: avoid;
+      }
+      h3 {
+        font-size: 1rem;
+        margin: 22px 0 8px;
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      p {
+        margin: 10px 0;
+      }
+
+      /* ---------- CALLOUTS ---------- */
+      .callout {
+        background: var(--accent-soft);
+        border-left: 4px solid var(--accent);
+        padding: 14px 18px;
+        border-radius: 8px;
+        margin: 16px 0;
+        page-break-inside: avoid;
+      }
+      .callout strong {
+        color: var(--accent);
+      }
+
+      .callout.good {
+        background: var(--good-soft);
+        border-color: var(--good);
+      }
+      .callout.good strong {
+        color: var(--good);
+      }
+      .callout.bad {
+        background: var(--bad-soft);
+        border-color: var(--bad);
+      }
+      .callout.bad strong {
+        color: var(--bad);
+      }
+      .callout.warn {
+        background: var(--warn-soft);
+        border-color: var(--warn);
+      }
+      .callout.warn strong {
+        color: var(--warn);
+      }
+
+      /* ---------- CODE ---------- */
+      pre {
+        background: var(--code-bg);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px 18px;
+        overflow-x: auto;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.82rem;
+        line-height: 1.55;
+        page-break-inside: avoid;
+      }
+      code {
+        font-family: "JetBrains Mono", monospace;
+        background: var(--code-bg);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.88em;
+        border: 1px solid var(--border);
+      }
+      pre code {
+        background: none;
+        padding: 0;
+        border: 0;
+      }
+
+      /* ---------- TABLES ---------- */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0;
+        font-size: 0.88rem;
+        page-break-inside: avoid;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+      th {
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-weight: 700;
+        border-bottom: 2px solid var(--accent);
+      }
+      tr:nth-child(even) td {
+        background: #fafafa;
+      }
+
+      /* ---------- SIDE-BY-SIDE CARDS ---------- */
+      .compare {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 14px;
+        margin: 20px 0;
+        page-break-inside: avoid;
+      }
+      .card {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px 16px;
+        background: #fff;
+      }
+      .card .tag {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+      .card.break .tag {
+        background: var(--bad-soft);
+        color: var(--bad);
+      }
+      .card.continue .tag {
+        background: var(--warn-soft);
+        color: var(--warn);
+      }
+      .card.return .tag {
+        background: var(--good-soft);
+        color: var(--good);
+      }
+      .card h4 {
+        margin: 0 0 6px;
+        font-size: 1rem;
+        font-family: "JetBrains Mono", monospace;
+      }
+      .card p {
+        font-size: 0.86rem;
+        margin: 4px 0;
+      }
+      .card .out {
+        font-family: "JetBrains Mono", monospace;
+        background: var(--code-bg);
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 0.78rem;
+        margin-top: 8px;
+        border: 1px solid var(--border);
+      }
+
+      /* ---------- GRID ICONS ---------- */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin: 16px 0;
+      }
+
+      /* ---------- HOOKS ---------- */
+      .hook {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        background: var(--code-bg);
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        margin: 8px 0;
+        font-size: 0.9rem;
+      }
+      .hook .emoji {
+        font-size: 1.4rem;
+      }
+
+      /* ---------- TL;DR ---------- */
+      .tldr {
+        background: linear-gradient(135deg, #1e293b, #0f172a);
+        color: #e2e8f0;
+        padding: 28px 24px;
+        border-radius: 14px;
+        margin-top: 36px;
+        text-align: center;
+        page-break-inside: avoid;
+      }
+      .tldr .big {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: #60a5fa;
+        margin-bottom: 10px;
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: 0.02em;
+      }
+      .tldr small {
+        color: #94a3b8;
+        font-size: 0.84rem;
+      }
+
+      /* ---------- FOOTER ---------- */
+      .footer {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.78rem;
+        margin-top: 36px;
+        padding-top: 18px;
+        border-top: 1px solid var(--border);
+      }
+
+      /* ---------- PRINT ---------- */
+      @media print {
+        body {
+          background: #fff;
+          padding: 0;
+          font-size: 12px;
+        }
+        .page {
+          box-shadow: none;
+          border-radius: 0;
+          padding: 20px 28px;
+          max-width: 100%;
+        }
+        pre,
+        table,
+        .card,
+        .callout,
+        .compare,
+        .grid-2 {
+          page-break-inside: avoid;
+        }
+        h2 {
+          page-break-after: avoid;
+        }
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- ============ HERO ============ -->
+      <div class="hero">
+        <h1>🔁 Java Loop Control</h1>
+        <p class="sub">
+          break · continue · return · labels · do-while — a complete cheat sheet
+        </p>
+        <div class="badges">
+          <span>Java 17+</span>
+          <span>Beginner</span>
+          <span>Examples Included</span>
+        </div>
+      </div>
+
+      <!-- ============ TL;DR SIDE-BY-SIDE ============ -->
+      <h2>⚡ The Three Core Controls — Side by Side</h2>
+      <div class="compare">
+        <div class="card break">
+          <span class="tag">break</span>
+          <h4>break;</h4>
+          <p>
+            Exits the
+            <b>innermost</b>
+            loop entirely.
+          </p>
+          <div class="out">
+            for i=1..5
+            <br />
+            &nbsp;&nbsp;if i==3 break;
+            <br />
+            &nbsp;&nbsp;print i
+            <br />
+            → 1 2
+          </div>
+        </div>
+        <div class="card continue">
+          <span class="tag">continue</span>
+          <h4>continue;</h4>
+          <p>
+            Skips the
+            <b>rest of this iteration</b>
+            . Loop keeps going.
+          </p>
+          <div class="out">
+            for i=1..5
+            <br />
+            &nbsp;&nbsp;if i==3 continue;
+            <br />
+            &nbsp;&nbsp;print i
+            <br />
+            → 1 2 4 5
+          </div>
+        </div>
+        <div class="card return">
+          <span class="tag">return</span>
+          <h4>return;</h4>
+          <p>
+            Exits the
+            <b>whole method</b>
+            , not just the loop.
+          </p>
+          <div class="out">
+            for i=1..5
+            <br />
+            &nbsp;&nbsp;if i==3 return;
+            <br />
+            &nbsp;&nbsp;print i
+            <br />
+            → 1 2
+            <i>(method ends)</i>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ COMPARISON TABLE ============ -->
+      <h2>📊 Comparison Table</h2>
+      <table>
+        <tr>
+          <th>Feature</th>
+          <th><code>break</code></th>
+          <th><code>continue</code></th>
+          <th><code>return</code></th>
+        </tr>
+        <tr>
+          <td>Stops the loop?</td>
+          <td class="good">✅ Yes</td>
+          <td>❌ No</td>
+          <td class="good">✅ Yes</td>
+        </tr>
+        <tr>
+          <td>Skips current iteration?</td>
+          <td>❌ No</td>
+          <td class="good">✅ Yes</td>
+          <td>N/A</td>
+        </tr>
+        <tr>
+          <td>Exits outer loops?</td>
+          <td>❌ Only if labeled</td>
+          <td>❌ Only if labeled</td>
+          <td class="good">✅ Always (whole method)</td>
+        </tr>
+        <tr>
+          <td>Can return a value?</td>
+          <td>❌</td>
+          <td>❌</td>
+          <td class="good">
+            ✅
+            <code>return x;</code>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Works in
+            <code>switch</code>
+            ?
+          </td>
+          <td class="good">✅ Yes</td>
+          <td>❌ No</td>
+          <td class="good">✅ Yes</td>
+        </tr>
+        <tr>
+          <td>Typical use</td>
+          <td>Found it — stop.</td>
+          <td>Skip bad/irrelevant item.</td>
+          <td>Hand back result, quit method.</td>
+        </tr>
+      </table>
+
+      <!-- ============ BREAK DETAIL ============ -->
+      <h2>🚪 1. break</h2>
+      <div class="callout">
+        <strong>One-liner:</strong>
+        "I'm leaving the room." — exits the
+        <b>innermost</b>
+        loop immediately.
+      </div>
+      <pre><code>for (int i = 1; i &lt;= 10; i++) {
+    if (i == 5) {
+        System.out.println("Hit 5 — stop.");
+        break;                // ← exits loop entirely
+    }
+    System.out.println("i = " + i);
+}
+// Output: i = 1  i = 2  i = 3  i = 4  Hit 5 — stop.</code></pre>
+
+      <!-- ============ CONTINUE DETAIL ============ -->
+      <h2>⏭️ 2. continue</h2>
+      <div class="callout warn">
+        <strong>One-liner:</strong>
+        "Skip this one, next please." — jumps to the next iteration.
+      </div>
+      <pre><code>for (int i = 1; i &lt;= 6; i++) {
+    if (i % 2 == 0) {
+        continue;             // ← skip even numbers
+    }
+    System.out.println("Odd: " + i);
+}
+// Output: Odd: 1  Odd: 3  Odd: 5</code></pre>
+
+      <!-- ============ RETURN DETAIL ============ -->
+      <h2>🏃 3. return</h2>
+      <div class="callout good">
+        <strong>One-liner:</strong>
+        "I'm leaving the building." — exits the whole
+        <b>method</b>
+        .
+      </div>
+      <pre><code>static void search(int[] arr, int target) {
+    for (int i = 0; i &lt; arr.length; i++) {
+        if (arr[i] == target) {
+            System.out.println("Found at " + i);
+            return;           // ← exits the METHOD entirely
+        }
+    }
+    System.out.println("Not found");
+}
+// After return, nothing else in the method runs — not even "Not found".</code></pre>
+
+      <!-- ============ LABELED BREAK ============ -->
+      <h2>🚪🚪 4. Labeled break (escape nested loops)</h2>
+      <div class="callout">
+        <strong>One-liner:</strong>
+        "Leaving this room
+        <b>and</b>
+        the whole floor." — breaks out of an
+        <b>outer</b>
+        loop.
+      </div>
+      <pre><code>outer:
+for (int i = 1; i &lt;= 3; i++) {
+    for (int j = 1; j &lt;= 3; j++) {
+        if (i * j == 6) {
+            System.out.println("Found at (" + i + "," + j + ")");
+            break outer;      // ← exits BOTH loops
+        }
+        System.out.println("i=" + i + ", j=" + j);
+    }
+}
+// Output stops at: i=2, j=2 → Found at (2,3)</code></pre>
+
+      <!-- ============ LABELED CONTINUE ============ -->
+      <h2>🔄 5. Labeled continue (skip an entire outer iteration)</h2>
+      <div class="callout warn">
+        <strong>One-liner:</strong>
+        "Skip to the next floor — forget this row." — jumps to the next
+        iteration of the
+        <b>outer</b>
+        loop.
+      </div>
+      <pre><code>outer:
+for (int i = 1; i &lt;= 3; i++) {
+    for (int j = 1; j &lt;= 3; j++) {
+        if (j == 2) {
+            continue outer;   // ← skip the rest of row i
+        }
+        System.out.println("i=" + i + ", j=" + j);
+    }
+}
+// Output only prints j=1 for each i: (1,1) (2,1) (3,1)</code></pre>
+
+      <!-- ============ DO-WHILE ============ -->
+      <h2>🎢 6. do-while with break</h2>
+      <div class="callout">
+        <strong>One-liner:</strong>
+        "Ride once, then ask if again." — body runs
+        <b>at least once</b>
+        .
+      </div>
+      <pre><code>int n = 0;
+do {
+    n++;
+    if (n == 3) {
+        System.out.println("n reached 3 — break.");
+        break;
+    }
+    System.out.println("n = " + n);
+} while (n &lt; 10);
+// Output: n = 1  n = 2  n reached 3 — break.</code></pre>
+
+      <!-- ============ RETURN VALUE ============ -->
+      <h2>🎁 7. Returning a value from inside a loop</h2>
+      <div class="callout good">
+        <strong>Pattern:</strong>
+        search until found →
+        <code>return</code>
+        the result → otherwise fall through to a default.
+      </div>
+      <pre><code>static int findIndex(int[] arr, int target) {
+    for (int i = 0; i &lt; arr.length; i++) {
+        if (arr[i] == target) {
+            return i;           // ← hand back the answer, exit method
+        }
+    }
+    return -1;                  // not found
+}</code></pre>
+
+      <!-- ============ REAL-WORLD COMBO ============ -->
+      <h2>🧩 8. Real-world combo — validation loop</h2>
+      <p>
+        Uses
+        <code>return</code>
+        ,
+        <code>continue</code>
+        , and an infinite loop — no
+        <code>valid</code>
+        flag needed.
+      </p>
+      <pre><code>static int readScore(Scanner sc) {
+    while (true) {
+        System.out.print("Score (0-100, 'q' to quit): ");
+        String input = sc.nextLine().trim();
+
+        if (input.equalsIgnoreCase("q")) {
+            return -1;              // RETURN — abort
+        }
+        if (input.isEmpty()) {
+            System.out.println("  [X] Empty.");
+            continue;               // CONTINUE — retry
+        }
+
+        int value;
+        try {
+            value = Integer.parseInt(input);
+        } catch (Exception e) {
+            System.out.println("  [X] Not a number.");
+            continue;               // CONTINUE — retry
+        }
+
+        if (value &lt; 0 || value &gt; 100) {
+            System.out.println("  [X] Out of range.");
+            continue;               // CONTINUE — retry
+        }
+        return value;               // RETURN — good value
+    }
+}</code></pre>
+
+      <!-- ============ HOOKS ============ -->
+      <h2>🧠 Memory Hooks</h2>
+      <div class="hook">
+        <span class="emoji">🚪</span>
+        <b>break</b>
+        — "I'm leaving the room (loop)."
+      </div>
+      <div class="hook">
+        <span class="emoji">⏭️</span>
+        <b>continue</b>
+        — "Skip this one, next please."
+      </div>
+      <div class="hook">
+        <span class="emoji">🏃</span>
+        <b>return</b>
+        — "I'm leaving the building (method)."
+      </div>
+      <div class="hook">
+        <span class="emoji">🚪🚪</span>
+        <b>break outer;</b>
+        — "Leaving this room
+        <b>and</b>
+        the whole floor."
+      </div>
+      <div class="hook">
+        <span class="emoji">🔄</span>
+        <b>continue outer;</b>
+        — "Skip to the next floor."
+      </div>
+      <div class="hook">
+        <span class="emoji">🎢</span>
+        <b>do-while</b>
+        — "Ride once, then ask if again."
+      </div>
+
+      <!-- ============ COMMON MISTAKES ============ -->
+      <h2>⚠️ Common Mistakes</h2>
+
+      <h3>1. Unreachable code after return / break</h3>
+      <pre><code>if (x == 0) {
+    return;
+    System.out.println("never runs");   // ❌ compile error
+}</code></pre>
+
+      <h3>2. Infinite loop — continue skips the update</h3>
+      <pre><code>int i = 0;
+while (i &lt; 10) {
+    if (i == 3) continue;   // ❌ i never increments → infinite
+    i++;
+}
+// Fix: increment i BEFORE the continue, or use a for-loop.</code></pre>
+
+      <h3>3. break in switch vs loop</h3>
+      <div class="callout">
+        Inside a
+        <code>switch</code>
+        ,
+        <code>break</code>
+        exits the
+        <b>switch</b>
+        , not the surrounding loop. Use a
+        <b>labeled break</b>
+        to leave the loop from inside a switch.
+      </div>
+
+      <h3>4. Confusing break and return</h3>
+      <table>
+        <tr>
+          <th>You want...</th>
+          <th>Use</th>
+        </tr>
+        <tr>
+          <td>Stop this loop, but keep the method running</td>
+          <td><code>break</code></td>
+        </tr>
+        <tr>
+          <td>Stop this loop and leave the method</td>
+          <td><code>return</code></td>
+        </tr>
+        <tr>
+          <td>Stop this loop and hand a value back to the caller</td>
+          <td><code>return value;</code></td>
+        </tr>
+      </table>
+
+      <!-- ============ DECISION FLOW ============ -->
+      <h2>🌳 Decision Flow</h2>
+      <table>
+        <tr>
+          <th>If you need to…</th>
+          <th>Use</th>
+        </tr>
+        <tr>
+          <td>Skip the rest of this iteration</td>
+          <td><code>continue</code></td>
+        </tr>
+        <tr>
+          <td>Exit the current loop</td>
+          <td><code>break</code></td>
+        </tr>
+        <tr>
+          <td>Exit nested loops at once</td>
+          <td><code>break outer;</code></td>
+        </tr>
+        <tr>
+          <td>Skip to the next outer iteration</td>
+          <td><code>continue outer;</code></td>
+        </tr>
+        <tr>
+          <td>Exit the method with a result</td>
+          <td><code>return value;</code></td>
+        </tr>
+        <tr>
+          <td>Exit the method with no result</td>
+          <td><code>return;</code></td>
+        </tr>
+        <tr>
+          <td>Run body at least once</td>
+          <td><code>do { } while (cond);</code></td>
+        </tr>
+        <tr>
+          <td>Loop forever until a condition fires</td>
+          <td><code>while (true) { … }</code></td>
+        </tr>
+      </table>
+
+      <!-- ============ TL;DR ============ -->
+      <div class="tldr">
+        <div class="big">
+          break → exit loop · continue → skip iteration · return → exit method
+        </div>
+        <small>
+          Labels (
+          <code>break outer;</code>
+          /
+          <code>continue outer;</code>
+          ) let you control
+          <b>which</b>
+          loop.
+          <code>do-while</code>
+          always runs once.
+          <code>while(true)</code>
+          +
+          <code>return</code>
+          is the cleanest validation loop.
+        </small>
+      </div>
+
+      <div class="footer">
+        Java Loop Control — Cheat Sheet · Print with Ctrl+P → Save as PDF ·
+        Margins: None · Background graphics: On
+      </div>
+    </div>
+  </body>
+</html>
